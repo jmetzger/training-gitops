@@ -21,7 +21,10 @@
   1. Advanced Commands 
      * [git reflog](reflog.md) 
      * [git reset - Back in Time](reset.md)   
-     
+   
+  1. github 
+     * [GitHub Actions](/github/actions.md)  
+   
   1. Tips & tricks 
      * [Beautified log](beautify-log.md)
      * [Change already committed files and message](commit-amend.md) 
