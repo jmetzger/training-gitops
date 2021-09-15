@@ -3,7 +3,7 @@
 ## Types of Pages
 
   * Personal Page: http://jmetzger.github.io 
-  * Projekt Page http://
+  * Project Page http://
 
 ## Personal Site 
 
