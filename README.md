@@ -24,7 +24,9 @@
    
   1. github 
      * [GitHub Actions](/github/actions.md)  
-   
+     * [Github Pages](/github/pages.md) 
+
+
   1. Tips & tricks 
      * [Beautified log](beautify-log.md)
      * [Change already committed files and message](commit-amend.md) 
