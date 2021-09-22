@@ -17,7 +17,7 @@
      * [git show](show.md)
      * [Needed commands for starters](started-commands.md)
      * [git branch](branch.md)
-     * [git checkout](checkout.md)
+     * [git checkout - used for branches and files](checkout.md)
      * [git merge](merge.md)
      * [git tag](tag.md)
    
