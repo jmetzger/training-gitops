@@ -2,9 +2,12 @@
 
 ## Agenda 
 
-  1. Installation 
+  1. Installation (GIT) 
      * [GIT auf Ubuntu/Debian installieren](installation-ubuntu-debian.md)
      * [GIT unter Windows installieren](https://git-scm.com/download/win)
+  
+  1. Kubernetes 
+     * [Installation micro8ks (Ubuntu)](/kubernetes/installation-ubuntu.md)
   
   1. Commands (with tipps & tricks) 
      * [git add + Tipps & Tricks](add.md)
