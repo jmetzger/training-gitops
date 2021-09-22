@@ -7,7 +7,7 @@
      * [GIT unter Windows installieren](https://git-scm.com/download/win)
   
   1. Kubernetes 
-     * [Installation micro8ks (Ubuntu)](/kubernetes/installation-ubuntu.md)
+     * [Installation micro8ks (Ubuntu)](/kubernetes/installation-micro8ks-ubuntu.md)
   
   1. Commands (with tipps & tricks) 
      * [git add + Tipps & Tricks](add.md)
