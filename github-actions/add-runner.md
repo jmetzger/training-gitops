@@ -61,6 +61,12 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
 ```
 
+## View logs of runner - service 
+
+```
+systemctl status actions.runner.gittrainereu-runnertest.gh-runner1 -l
+journalctl -u actions.runner.gittrainereu-runnertest.gh-runner1 
+```
 
 ## Reference 
 
