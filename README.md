@@ -36,6 +36,11 @@
      * [Work with artefacts](/github-actions/work-with-artefacts.md)
      * [Create digitalocean-kubernetes.md](/github-actions/digitalocean-kubernetes.md) 
 
+  1. github actions - examples 
+     * [Simple Workflow Test](/github-actions/examples/01-workflow-test.md)
+     * [Checkout Repo](/github-actions/examples/02-checkout-repo.md)
+     * [Push to repo](/github-actions/examples/03-push-to-repo.md)
+
   1. Nix kaputtmachen - so gehts
      * [Die 5 goldenenen Regeln](5-goldene-regeln.md) 
 
