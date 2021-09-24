@@ -1,3 +1,6 @@
+# Example checkout of repo
+
+```
 # This is a basic workflow to help you get started with Actions
 
 name: Jochen's erster Workflow 
@@ -24,3 +27,4 @@ jobs:
           env
       # Runs a single command using the runners shell
       - run: echo Hello, world!
+```
