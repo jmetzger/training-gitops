@@ -29,7 +29,12 @@
      * [Github Pages](/github/pages.md) 
 
   1. github actions 
-     
+     * [General overview](/github-actions/general.md)
+     * [Add a self-host runner](/github-actions/add-runner.md
+     * [Create custom composite action](/github-actions/create-custom-action-composite.md)
+     * [Create custom docker action](/github-actions/create-custom-action-docker.md)
+     * [Work with artefacts](/github-actions/work-with-artefacts.md)
+     * [Create digitalocean-kubernetes.md](/github-actions/digitalocean-kubernetes.md) 
 
   1. Nix kaputtmachen - so gehts
      * [Die 5 goldenenen Regeln](5-goldene-regeln.md) 
