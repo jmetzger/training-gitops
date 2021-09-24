@@ -36,6 +36,11 @@
      * [Work with artefacts](#work-with-artefacts)
      * [Create digitalocean-kubernetes.md](#create-digitalocean-kubernetes.md)
 
+  1. github actions - examples 
+     * [Simple Workflow Test](#simple-workflow-test)
+     * [Checkout Repo](#checkout-repo)
+     * [Push to repo](#push-to-repo)
+
   1. Nix kaputtmachen - so gehts
      * [Die 5 goldenenen Regeln](#die-5-goldenenen-regeln)
 
@@ -759,6 +764,123 @@ Integrate all clusters -> Save (Button) (or only one specific cluster)
 ### Reference 
 
   * https://docs.digitalocean.com/products/kubernetes/how-to/deploy-using-github-actions/
+
+<div class="page-break"></div>
+
+## github actions - examples 
+
+### Simple Workflow Test
+
+
+
+```
+## This is a basic workflow to help you get started with Actions
+## .github/workflows/workflow-test.yml 
+
+name: Jochen's erster Workflow 
+
+## Controls when the workflow will run
+on: push
+
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  jochen-runs-something:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      # Runs a single command using the runners shell
+      - run: echo Hello, world!
+```
+
+<div class="page-break"></div>
+
+### Checkout Repo
+
+
+```
+## This is a basic workflow to help you get started with Actions
+
+name: Jochen's erster Workflow 
+
+## Controls when the workflow will run
+on: push
+
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  jochen-checksout-and-runs-something:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      - name: Checke repo aus
+        uses: actions/checkout@v2
+        
+      - run: |
+          ls -la
+          pwd
+          env
+      # Runs a single command using the runners shell
+      - run: echo Hello, world!
+```
+
+<div class="page-break"></div>
+
+### Push to repo
+
+
+
+```
+## This is a basic workflow to help you get started with Actions
+
+name: Jochen's erster Workflow 
+
+## Controls when the workflow will run
+on: push
+
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  jochen-checksout-and-runs-something:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      - name: Checke repo aus
+        uses: actions/checkout@v2
+        
+      - run: |
+          ls -la
+          pwd
+          env
+      # Runs a single command using the runners shell
+      - run: echo Hello, world!
+      - name: In repo schreiben
+        run: |
+          env > umgebung.txt
+          ls -la >> umgebung.txt
+          ls -la $GITHUB_WORKSPACE 
+          ls -la 
+          
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Add changes" -a
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        
+```
 
 <div class="page-break"></div>
 
