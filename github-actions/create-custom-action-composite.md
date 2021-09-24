@@ -34,7 +34,7 @@ echo "Goodbye"
 
 ## use it in other repo in workflow 
 # .github/workflows/workflow-hello.yml 
- on: [push]
+on: [push]
 
 jobs:
   greetings:
