@@ -1,4 +1,4 @@
-# GIT-Training 
+# gitops-Training  
 
 ## Agenda 
 
