@@ -42,12 +42,12 @@ jobs:
     name: Greet Again 
 
   steps:
-  - id: foo
-    uses: gittrainereu/bash-action@main
-    with:
-      who-to-greet: 'Mona the Octocat'
-  - run: echo random-number ${{ steps.foo.outputs.random-number }}
-    shell: bash
+    - id: foo
+      uses: gittrainereu/bash-action@main
+      with:
+        who-to-greet: 'Mona the Octocat'
+    - run: echo random-number ${{ steps.foo.outputs.random-number }}
+      shell: bash
 ```
 
 ## Type of actions 
