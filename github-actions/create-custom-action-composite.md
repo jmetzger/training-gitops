@@ -1,4 +1,4 @@
-# Create custom action 
+# Create custom action (composite)
 
 ## Walkthrough 
 
