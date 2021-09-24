@@ -25,9 +25,16 @@
      * [git reflog](#git-reflog)
      * [git reset - Back in Time](#git-reset---back-in-time)
    
-  1. github 
-     * [GitHub Actions](#github-actions)
+  1. github pages
      * [Github Pages](#github-pages)
+
+  1. github actions 
+     * [General overview](#general-overview)
+     * [Add a self-host runner](#add-a-self-host-runner)
+     * [Create custom composite action](#create-custom-composite-action)
+     * [Create custom docker action](#create-custom-docker-action)
+     * [Work with artefacts](#work-with-artefacts)
+     * [Create digitalocean-kubernetes.md](#create-digitalocean-kubernetes.md)
 
   1. Nix kaputtmachen - so gehts
      * [Die 5 goldenenen Regeln](#die-5-goldenenen-regeln)
@@ -375,45 +382,7 @@ git reset --hard 2343
 
 <div class="page-break"></div>
 
-## github 
-
-### GitHub Actions
-
-
-### What are actions ? 
-
-```
-Actions are individual tasks that you can combine to create jobs and customize your workflow. 
-You can create your own actions, or use and customize actions shared by the GitHub community.
-
-Ref: https://docs.github.com/en/actions/creating-actions/about-actions
-```
-
-
-### Walkthrough to create a simple script based on Docker 
-
-```
-## Step 1: Create private repo on github 
-
-
-## Step 2: Clone repo from github 
-
-
-## Step 3: Create Docker file 
-## Dockerfile 
-
-
-
-```
-
-### Reference:
-
-  * https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
-
-
-
-
-<div class="page-break"></div>
+## github pages
 
 ### Github Pages
 
@@ -442,6 +411,354 @@ https://gittrainereu.github.io
 ```
 
 ### Project Page 
+
+<div class="page-break"></div>
+
+## github actions 
+
+### General overview
+
+
+### Komponenten 
+
+  * actions 
+  * workflows 
+  * jobs
+  * steps
+  * events 
+
+### Actions 
+
+  * What can we do ? 
+  * i.d.R läuft jede Action in einem docker-container (aber auch möglich: node-js (12), combined)
+
+### Workflows 
+
+  * ENV (Umgebungsvariablen, Variablen) 
+  * Jobs -> Steps 
+  * Events 
+
+<div class="page-break"></div>
+
+### Add a self-host runner
+
+
+### Prerequisites
+
+  * Install docker 
+
+### Walkthrough
+
+```
+1. Login to github 
+2. Click on repo -> settings
+3. Click on actions 
+4. Click on runners
+5. Click add self-hosted runner 
+
+## important, as we install it as root, 
+## you need to 
+export RUNNER_ALLOW_RUNASROOT="1"
+## before doing the configuration ./config.sh 
+see:
+https://serverfault.com/questions/1052695/must-not-run-with-sudo-while-trying-to-create-a-runner-using-github-actions
+
+## When configuration is done, install service and start it.
+./svc.sh install
+./svc.sh start
+./svc.sh status 
+
+```
+
+### Using it for an action:
+
+```
+## Example 
+## You need to activated it as:
+## runs-on: [self-hosted, linux, x64, gpu]
+## minimal would be 
+runs-on: self-hosted 
+```
+
+### Full example 
+
+  * in .github/workflows/whatevername.yml 
+
+```
+name: GitHub Actions Demo
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: self-hosted
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+```
+
+### View logs of runner - service 
+
+```
+systemctl status actions.runner.gittrainereu-runnertest.gh-runner1 -l
+journalctl -u actions.runner.gittrainereu-runnertest.gh-runner1 
+```
+
+### Reference 
+
+  * https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners
+
+
+<div class="page-break"></div>
+
+### Create custom composite action
+
+
+### Walkthrough 
+
+```
+## new repo - e.g. 
+bash-action
+
+## action.yml 
+name: 'Hello World'
+description: 'Greet someone'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo Hello ${{ inputs.who-to-greet }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      shell: bash
+    - run: ${{ github.action_path }}/goodbye.sh
+      shell: bash
+
+## goodbye.sh 
+echo "Goodbye"
+
+### use it in other repo in workflow 
+## .github/workflows/workflow-hello.yml 
+on: [push]
+
+jobs:
+  greetings:
+    runs-on: ubuntu-latest
+    name: Greet Again 
+
+  steps:
+    - id: foo
+      uses: gittrainereu/bash-action@main
+      with:
+        who-to-greet: 'Mona the Octocat'
+    - run: echo random-number ${{ steps.foo.outputs.random-number }}
+      shell: bash
+```
+
+### Type of actions 
+
+  * JavaScript
+  * Docker 
+  * Composite 
+  * Ref: https://docs.github.com/en/actions/creating-actions/about-custom-actions#types-of-actions
+
+### Create a composite action 
+
+  * https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+
+### Reference 
+
+  * https://docs.github.com/en/actions/creating-actions
+
+<div class="page-break"></div>
+
+### Create custom docker action
+
+
+### Walkthrough 
+
+```
+##Dockerfile 
+## Container image that runs your code
+FROM alpine:3.10
+
+## Copies your code file from your action repository to the filesystem path `/` of the container
+COPY entrypoint.sh /entrypoint.sh
+
+## Code file to execute when the docker container starts up (`entrypoint.sh`)
+ENTRYPOINT ["/entrypoint.sh"]
+```
+
+```
+## action.yml
+name: 'Hello World'
+description: 'Greet someone and record the time'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.who-to-greet }}
+```
+
+```
+## entrypoint.sh
+##!/bin/sh -l
+
+echo "Hello $1"
+time=$(date)
+echo "::set-output name=time::$time"
+```
+
+
+```
+## .github/workflows/workflow-docker.yml 
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: gittrainereu/docker-action@main
+        with:
+          who-to-greet: 'Mona the Octocat'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
+```
+
+
+### Reference: 
+
+  * https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
+
+<div class="page-break"></div>
+
+### Work with artefacts
+
+
+### Walkthrough 
+
+```
+name: Share data between jobs
+
+on: [push]
+
+jobs:
+  job_1:
+    name: Add 3 and 7
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          expr 3 + 7 > math-homework.txt
+      - name: Upload math result for job 1
+        uses: actions/upload-artifact@v2
+        with:
+          name: homework
+          path: math-homework.txt
+
+  job_2:
+    name: Multiply by 9
+    needs: job_1
+    runs-on: windows-latest
+    steps:
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v2
+        with:
+          name: homework
+      - shell: bash
+        run: |
+          value=`cat math-homework.txt`
+          expr $value \* 9 > math-homework.txt
+      - name: Upload math result for job 2
+        uses: actions/upload-artifact@v2
+        with:
+          name: homework
+          path: math-homework.txt
+
+  job_3:
+    name: Display results
+    needs: job_2
+    runs-on: macOS-latest
+    steps:
+      - name: Download math result for job 2
+        uses: actions/download-artifact@v2
+        with:
+          name: homework
+      - name: Print the final result
+        shell: bash
+        run: |
+          value=`cat math-homework.txt`
+          echo The result is $value
+```
+
+
+### Reference 
+
+  * https://docs.github.com/en/actions/advanced-guides/storing-workflow-data-as-artifacts
+
+<div class="page-break"></div>
+
+### Create digitalocean-kubernetes.md
+
+
+### Walkthrough 
+
+```
+## Step 1: Setup Kubernetes through digitalocean interface 
+
+## Step 2: Setup Container Registry (digitalocean) 
+(if not setup create a container registry)
+ours is currently: training 
+
+## Step 3a: Create personal access key 
+https://cloud.digitalocean.com/account/api/
+
+## Step 3b: ... and save it as secret DIGITALOCEAN_ACCESS_TOKEN in your repo 
+Repo -> Settings -> Secrects -> New Repository Secret (Button top left) 
+
+## Step 4: Kubernetes Cluster (digitalocean) mit Registry verheiraten (digitalocean) 
+In the control panel, you can select the Kubernetes clusters to use with your registry. 
+This generates a secret, adds it to all the namespaces in the cluster and updates 
+the default service account to include the secret, allowing you to pull images from the registry.
+
+Container Registry -> Settings (Tab) -> Digital Ocean Kubernetes Integration -> Edit 
+
+Integrate all clusters -> Save (Button) (or only one specific cluster) 
+
+```
+
+
+### Reference 
+
+  * https://docs.digitalocean.com/products/kubernetes/how-to/deploy-using-github-actions/
 
 <div class="page-break"></div>
 
