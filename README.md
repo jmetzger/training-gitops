@@ -30,7 +30,7 @@
 
   1. github actions 
      * [General overview](/github-actions/general.md)
-     * [Add a self-host runner](/github-actions/add-runner.md
+     * [Add a self-host runner](/github-actions/add-runner.md)
      * [Create custom composite action](/github-actions/create-custom-action-composite.md)
      * [Create custom docker action](/github-actions/create-custom-action-docker.md)
      * [Work with artefacts](/github-actions/work-with-artefacts.md)
