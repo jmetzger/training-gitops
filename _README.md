@@ -2,9 +2,12 @@
 
 
 ## Agenda
-  1. Installation 
+  1. Installation (GIT) 
      * [GIT auf Ubuntu/Debian installieren](#git-auf-ubuntudebian-installieren)
      * [GIT unter Windows installieren](https://git-scm.com/download/win)
+  
+  1. Kubernetes 
+     * [Installation micro8ks (Ubuntu)](#installation-micro8ks-ubuntu)
   
   1. Commands (with tipps & tricks) 
      * [git add + Tipps & Tricks](#git-add-+-tipps-&-tricks)
@@ -14,18 +17,27 @@
      * [git show](#git-show)
      * [Needed commands for starters](#needed-commands-for-starters)
      * [git branch](#git-branch)
-     * [git checkout](#git-checkout)
+     * [git checkout - used for branches and files](#git-checkout---used-for-branches-and-files)
      * [git merge](#git-merge)
      * [git tag](#git-tag)
    
   1. Advanced Commands 
      * [git reflog](#git-reflog)
      * [git reset - Back in Time](#git-reset---back-in-time)
-     
+   
+  1. github 
+     * [GitHub Actions](#github-actions)
+     * [Github Pages](#github-pages)
+
+  1. Nix kaputtmachen - so gehts
+     * [Die 5 goldenenen Regeln](#die-5-goldenenen-regeln)
+
   1. Tips & tricks 
      * [Beautified log](#beautified-log)
      * [Change already committed files and message](#change-already-committed-files-and-message)
      * [Best practice - Delete origin,tracking and local branch after pull request/merge request](#best-practice---delete-origin,tracking-and-local-branch-after-pull-requestmerge-request)
+     * [Change language to german - Linux](#change-language-to-german---linux)
+     * [Reference tree without sha-1](#reference-tree-without-sha-1)
   
   1. Exercises 
      * [merge feature/4712 - conflict](#merge-feature4712---conflict)
@@ -53,7 +65,7 @@
 
 <div class="page-break"></div>
 
-## Installation 
+## Installation (GIT) 
 
 ### GIT auf Ubuntu/Debian installieren
 
@@ -90,6 +102,18 @@ LANG=en_US.UTF-8
 ### GIT unter Windows installieren
 
   * https://git-scm.com/download/win
+
+## Kubernetes 
+
+### Installation micro8ks (Ubuntu)
+
+
+### Reference: 
+
+  * https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#2-deploying-microk8s
+
+
+<div class="page-break"></div>
 
 ## Commands (with tipps & tricks) 
 
@@ -235,7 +259,7 @@ git branch -D branchname # <- is the solution
 
 <div class="page-break"></div>
 
-### git checkout
+### git checkout - used for branches and files
 
 
 ### Checkout (change to) existing branch 
@@ -249,6 +273,15 @@ git checkout feature/4711
 ```
 ## Only possible once 
 git checkout -b feature/4712
+```
+
+#### Recover deleted file 
+
+```
+rm todo.txt 
+## get from last from last commit 
+git checkout HEAD -- todo.txt 
+
 ```
 
 <div class="page-break"></div>
@@ -342,6 +375,96 @@ git reset --hard 2343
 
 <div class="page-break"></div>
 
+## github 
+
+### GitHub Actions
+
+
+### What are actions ? 
+
+```
+Actions are individual tasks that you can combine to create jobs and customize your workflow. 
+You can create your own actions, or use and customize actions shared by the GitHub community.
+
+Ref: https://docs.github.com/en/actions/creating-actions/about-actions
+```
+
+
+### Walkthrough to create a simple script based on Docker 
+
+```
+## Step 1: Create private repo on github 
+
+
+## Step 2: Clone repo from github 
+
+
+## Step 3: Create Docker file 
+## Dockerfile 
+
+
+
+```
+
+### Reference:
+
+  * https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
+
+
+
+
+<div class="page-break"></div>
+
+### Github Pages
+
+
+### Types of Pages
+
+  * Personal Page: http://jmetzger.github.io 
+  * Project Page http://
+
+### Personal Site 
+
+```
+## Step 1: create personal repo 
+e.g. 
+https://github.com/gittrainereu/gittrainereu.github.io 
+
+git clone https://github.com/gittrainereu/gittrainereu.github.io
+cd gittrainereu.github.io
+echo "Hello World" > index.html
+git add -A
+git commit -m "Initial commit"
+git push -u origin master 
+
+https://gittrainereu.github.io 
+
+```
+
+### Project Page 
+
+<div class="page-break"></div>
+
+## Nix kaputtmachen - so gehts
+
+### Die 5 goldenenen Regeln
+
+
+```
+1. Kein git commit --amend auf bereits veröffentlicht (gepushed) commit.
+
+2. Kein git reset vor bereits veröffentlichte (gepushed) commits 
+(1234 (HEAD -letzter Commit) < 5412 (vö - HEAD~1 - vorletzte Commit ) -> kein reset auf 1234) 
+
+3. Mach niemals ein git push --force (JM sagt) 
+
+4. Kein Rebase auf bereits veröffentlichte commits (nach vö von Feature branchen) 
+- ausser Feature-Branch kann online gelöscht und nochmal erstellt werden 
+
+```
+
+<div class="page-break"></div>
+
 ## Tips & tricks 
 
 ### Beautified log
@@ -404,6 +527,30 @@ git branch -d feature/4811
 ```
 
 <div class="page-break"></div>
+
+### Change language to german - Linux
+
+
+```
+sudo update-locale LANG=en_US.UTF-8
+su - kurs
+
+## back to german 
+
+sudo update-locale LANG=de_DE.UTF-8 
+su - kurs 
+
+## Reference:
+https://www.thomas-krenn.com/de/wiki/Locales_unter_Ubuntu_konfigurieren
+
+## update-locale does a change in
+$ cat /etc/default/locale 
+LANG=en_US.UTF-8
+```
+
+<div class="page-break"></div>
+
+### Reference tree without sha-1
 
 ## Exercises 
 
