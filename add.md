@@ -1,6 +1,6 @@
 # git add
 
-# Trick with -A 
+## Trick with -A 
 
 ```
 # only adds from the folder you are in recursively 
