@@ -50,6 +50,7 @@
      * [Best practice - Delete origin,tracking and local branch after pull request/merge request](best-practice-delete-branch.md)
      * [Change language to german - Linux](linux-english.md)
      * [Reference tree without sha-1](tree-no-sha.md)
+     * [Always do pull --rebase for master branch](master-pull-rebase.md)
   
   1. Exercises 
      * [merge feature/4712 - conflict](merge-conflict.md)
