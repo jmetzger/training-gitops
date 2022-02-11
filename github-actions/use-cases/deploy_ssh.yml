@@ -1,5 +1,14 @@
 # Deploy with ssh 
 
+## Requirements 
+
+```
+# apache is installed with php 
+# ssh runs 
+# DocumentRoot /var/www/html 
+
+```
+
 ## Steps 
 
 ```
