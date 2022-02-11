@@ -40,6 +40,7 @@
      * [Create custom docker action](/github-actions/create-custom-action-docker.md)
      * [Work with artefacts](/github-actions/work-with-artefacts.md)
      * [Create digitalocean-kubernetes.md](/github-actions/digitalocean-kubernetes.md) 
+     * [Deploy to server with ssh](/github-actions/use-cases/deploy_ssh.yml)
 
   1. github actions - examples 
      * [Simple Workflow Test](/github-actions/examples/01-workflow-test.md)
