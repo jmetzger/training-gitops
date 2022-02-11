@@ -25,16 +25,22 @@
      * [git reflog](#git-reflog)
      * [git reset - Back in Time](#git-reset---back-in-time)
    
+  1. Docker 
+     * [Install docker on Ubuntu](#install-docker-on-ubuntu)
+     * [Important commands](#important-commands)
+   
   1. github pages
      * [Github Pages](#github-pages)
 
   1. github actions 
      * [General overview](#general-overview)
      * [Add a self-host runner](#add-a-self-host-runner)
+     * [Create dependant jobs](#create-dependant-jobs)
      * [Create custom composite action](#create-custom-composite-action)
      * [Create custom docker action](#create-custom-docker-action)
      * [Work with artefacts](#work-with-artefacts)
      * [Create digitalocean-kubernetes.md](#create-digitalocean-kubernetes.md)
+     * [Deploy to server with ssh](#deploy-to-server-with-ssh)
 
   1. github actions - examples 
      * [Simple Workflow Test](#simple-workflow-test)
@@ -50,6 +56,7 @@
      * [Best practice - Delete origin,tracking and local branch after pull request/merge request](#best-practice---delete-origin,tracking-and-local-branch-after-pull-requestmerge-request)
      * [Change language to german - Linux](#change-language-to-german---linux)
      * [Reference tree without sha-1](#reference-tree-without-sha-1)
+     * [Always do pull --rebase for master branch](#always-do-pull---rebase-for-master-branch)
   
   1. Exercises 
      * [merge feature/4712 - conflict](#merge-feature4712---conflict)
@@ -109,8 +116,6 @@ LANG=en_US.UTF-8
 
 ```
 
-<div class="page-break"></div>
-
 ### GIT unter Windows installieren
 
   * https://git-scm.com/download/win
@@ -125,14 +130,12 @@ LANG=en_US.UTF-8
   * https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#2-deploying-microk8s
 
 
-<div class="page-break"></div>
-
 ## Commands (with tipps & tricks) 
 
 ### git add + Tipps & Tricks
 
 
-## Trick with -A 
+### Trick with -A 
 
 ```
 ## only adds from the folder you are in recursively 
@@ -143,8 +146,6 @@ git add .
 ## adds everything no matter in which folder you are in your project 
 git add -A 
 ```
-
-<div class="page-break"></div>
 
 ### git commit
 
@@ -163,8 +164,6 @@ git add -A
 git commit --amend
 ## now you can change the description, but you will get a new commit-id 
 ```
-
-<div class="page-break"></div>
 
 ### git log
 
@@ -202,8 +201,6 @@ git log --oneline --reverse | head -1
 git config --global alias.sl '!git log --oneline -2 && git status'
 ```
 
-<div class="page-break"></div>
-
 ### git config
 
 
@@ -219,8 +216,6 @@ git config --unset --global alias.log
 ```
 
 
-<div class="page-break"></div>
-
 ### git show
 
 
@@ -231,8 +226,6 @@ git show <commit-ish>
 ## example with commit-id 
 git show 342a
 ```
-
-<div class="page-break"></div>
 
 ### Needed commands for starters
 
@@ -251,8 +244,6 @@ git push
 git pull 
 ```
 
-<div class="page-break"></div>
-
 ### git branch
 
 
@@ -268,8 +259,6 @@ git branch lookaround 5f10ca
 git branch -d branchname # does not work in this case 
 git branch -D branchname # <- is the solution 
 ```
-
-<div class="page-break"></div>
 
 ### git checkout - used for branches and files
 
@@ -296,8 +285,6 @@ git checkout HEAD -- todo.txt
 
 ```
 
-<div class="page-break"></div>
-
 ### git merge
 
 
@@ -321,10 +308,10 @@ git merge --no-ff feature/4711
 
 ```
 
-<div class="page-break"></div>
-
 ### git tag
 
+
+### Creating and using tags
 
 ```
 ## set tag on current commit -> HEAD of branch 
@@ -342,7 +329,27 @@ git checkout tags/v0.1
 
 ```
 
-<div class="page-break"></div>
+### Deleting tags 
+
+```
+## Fetch new tags from online
+git fetch --tags 
+
+## Update master branch (rebase) and fetch all tags in addition from online 
+git checkout master
+git pull --rebase --tags
+
+## Tag local löschen und danach online löschen 
+git tag -d test.tag
+git push --delete origin test.tag
+
+## Tag online löschen und danach lokal 
+## Schritt 1: Über das interface (web) löschen 
+## Schritt 2: aktualisieren 
+git fetch --prune --prune-tags 
+
+
+```
 
 ## Advanced Commands 
 
@@ -366,8 +373,6 @@ git reflog
 
 ```
 
-<div class="page-break"></div>
-
 ### git reset - Back in Time
 
 
@@ -385,7 +390,72 @@ git reflog
 git reset --hard 2343 
 ```
 
-<div class="page-break"></div>
+## Docker 
+
+### Install docker on Ubuntu
+
+
+### Walkthrough 
+
+```
+sudo su -
+apt update && apt install -y apt-transport-https ca-certificates curl software-properties-common && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -;
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && apt-get update && apt-cache policy docker-ce && apt-get install -y docker-ce && systemctl status --no-pager docker
+```
+
+### Important commands
+
+
+### Volume 1
+
+```
+mkdir testdir
+cd testdir 
+## Dockerfile anlegen 
+docker build -t meincontainer .
+docker images 
+## interactive starten 
+## nach exit wird er beendet 
+docker run -it meincontainer
+## im container exit 
+docker ps -a 
+```
+
+### Volume 2
+
+```
+## image von docker hub download . hier ubuntu:latest
+docker pull ubuntu
+
+## Alle lokalen images anzeigen (auf dem Server vorhandene) 
+## z.B. die auf dem Serer mit docker build . erstellt wurden
+## ohne downgeloaded von docker hub 
+docker images
+
+## Neues docker container starten auf basis das ubuntu:latest images
+## Im Hintergrund (Daemonized) und an ein Terminal 
+docker run -dt ubuntu:latest
+
+## Alle laufenden docker-container anzeigen 
+docker ps 
+
+## Alle docker - container (auch beendete anzeigen)
+docker ps -a 
+
+## Alle laufenden Container anzeigen 
+docker exec -it e1a1d3 bash
+
+## Laufenden Docker container beendet und löschen 
+docker rm -f e21
+
+## docker images anzeigen 
+docker images
+
+## docker image lokal löschen 
+docker rmi ubuntu:latest
+
+
+```
 
 ## github pages
 
@@ -417,8 +487,6 @@ https://gittrainereu.github.io
 
 ### Project Page 
 
-<div class="page-break"></div>
-
 ## github actions 
 
 ### General overview
@@ -442,8 +510,6 @@ https://gittrainereu.github.io
   * ENV (Umgebungsvariablen, Variablen) 
   * Jobs -> Steps 
   * Events 
-
-<div class="page-break"></div>
 
 ### Add a self-host runner
 
@@ -521,7 +587,50 @@ journalctl -u actions.runner.gittrainereu-runnertest.gh-runner1
   * https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners
 
 
-<div class="page-break"></div>
+### Create dependant jobs
+
+
+### Execute job, if referred (by: needs) was succesful 
+
+```
+name: Jochen's nicer workflow 
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+ 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run a one-line script
+        run: | 
+          pwd 
+          ls -la
+          /bin/false
+    
+  deploy:
+    
+    # needs a succesful build 
+    # THAT IS IMPORTANT 
+    needs: build 
+    runs-on: ubuntu-latest 
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Starting the deploy 
+        run: | 
+          echo "starting the deployment process" 
+          ls -la
+
+```
+
+### Ref: 
+
+  * https://www.edwardthomson.com/blog/github_actions_17_dependent_jobs.html
 
 ### Create custom composite action
 
@@ -590,8 +699,6 @@ jobs:
 ### Reference 
 
   * https://docs.github.com/en/actions/creating-actions
-
-<div class="page-break"></div>
 
 ### Create custom docker action
 
@@ -663,8 +770,6 @@ jobs:
 
   * https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
 
-<div class="page-break"></div>
-
 ### Work with artefacts
 
 
@@ -729,8 +834,6 @@ jobs:
 
   * https://docs.github.com/en/actions/advanced-guides/storing-workflow-data-as-artifacts
 
-<div class="page-break"></div>
-
 ### Create digitalocean-kubernetes.md
 
 
@@ -765,7 +868,107 @@ Integrate all clusters -> Save (Button) (or only one specific cluster)
 
   * https://docs.digitalocean.com/products/kubernetes/how-to/deploy-using-github-actions/
 
-<div class="page-break"></div>
+### Deploy to server with ssh
+
+
+### Requirements 
+
+```
+## apache is installed with php 
+## ssh runs 
+## DocumentRoot /var/www/html 
+
+```
+
+### Steps 
+
+```
+Step 1:
+=======
+Auf Zielsystem (Webserver) public / private key erstellt 
+und pub-key in authorized_keys eingetragen.
+
+cd /root/.ssh 
+## Achtung bitte rsa und 4096 nehmen, Beschreibung von github
+## zum Erstellen eines pub/private keys funktioniert für github runner nicht 
+ssh-keygen -t rsa -b 4096 -C "foo@foo.com"
+cat github-actions.pub >> authorized_keys
+## Kopieren dieses Inhalt in die Secrets des repositories, von dem aus
+## ihr deployen wollt 
+cat github-actions
+
+Step 2: Eintrag in die Secretes 
+=======
+## Repository -> Settings -> Secrets -> Actions -> New Secret for Repo 
+SSH_PRIVATE_KEY 
+## Hier dann der Wert von github-actions 
+
+## Host (IP Eintragen) 
+SSH_HOST 
+
+Step 3: Workflow einrichten in Repo unter 
+.github/workflows/deinworkflow.yml 
+
+## This is a basic workflow to help you get started with Actions
+
+name: Jochen's nicer workflow 
+
+## Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build   
+    
+  deploy:
+    
+    # needs a succesful build 
+    needs: build 
+    runs-on: ubuntu-latest 
+    
+    env:
+    # Beispiel, jedoch nicht notwendig 
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+     
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Starting the deploy 
+        run: | 
+          echo "starting the deployment process" 
+          ls -la
+      - name: Install SSH Key 
+        uses: shimataro/ssh-key-action@v2
+        with: 
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'placeholder'
+      - name: Adding Known Hosts  
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts  
+      - name: Show known hosts 
+        run: ls -la ~/.ssh/known_hosts 
+      - name: synchronize 
+        run: rsync -avz ./dist root@${{ secrets.SSH_HOST }}:/var/www/html/ 
+
+### Schritt 3: Testen und debuggen 
+
+```
+
+### Ref: 
+
+  * https://zellwk.com/blog/github-actions-deploy/
+  
 
 ## github actions - examples 
 
@@ -795,8 +998,6 @@ jobs:
       # Runs a single command using the runners shell
       - run: echo Hello, world!
 ```
-
-<div class="page-break"></div>
 
 ### Checkout Repo
 
@@ -829,8 +1030,6 @@ jobs:
       # Runs a single command using the runners shell
       - run: echo Hello, world!
 ```
-
-<div class="page-break"></div>
 
 ### Push to repo
 
@@ -882,8 +1081,6 @@ jobs:
         
 ```
 
-<div class="page-break"></div>
-
 ## Nix kaputtmachen - so gehts
 
 ### Die 5 goldenenen Regeln
@@ -892,7 +1089,7 @@ jobs:
 ```
 1. Kein git commit --amend auf bereits veröffentlicht (gepushed) commit.
 
-2. Kein git reset vor bereits veröffentlichte (gepushed) commits 
+2. Kein git reset vor bereits veröffentlichte (gepushed/gepushten) commits 
 (1234 (HEAD -letzter Commit) < 5412 (vö - HEAD~1 - vorletzte Commit ) -> kein reset auf 1234) 
 
 3. Mach niemals ein git push --force (JM sagt) 
@@ -901,8 +1098,6 @@ jobs:
 - ausser Feature-Branch kann online gelöscht und nochmal erstellt werden 
 
 ```
-
-<div class="page-break"></div>
 
 ## Tips & tricks 
 
@@ -920,10 +1115,8 @@ git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Crese
 ### PRETTY FORMATS
 
   * all documented in git help log (section PRETTY FORMAT)
-  * https://git-scm.com/docs/git-log
+  * https://git-scm.com/docs/git-log#_pretty_formats
   
-
-<div class="page-break"></div>
 
 ### Change already committed files and message
 
@@ -940,8 +1133,6 @@ git add .
 git commit --amend # README will be in same commit as newfile.txt 
 ## + you can also changed the commit message 
 ```
-
-<div class="page-break"></div>
 
 ### Best practice - Delete origin,tracking and local branch after pull request/merge request
 
@@ -965,8 +1156,6 @@ git branch -d feature/4811
 
 ```
 
-<div class="page-break"></div>
-
 ### Change language to german - Linux
 
 
@@ -987,9 +1176,14 @@ $ cat /etc/default/locale
 LANG=en_US.UTF-8
 ```
 
-<div class="page-break"></div>
-
 ### Reference tree without sha-1
+
+### Always do pull --rebase for master branch
+
+
+```
+git config --global branch.master.rebase true
+```
 
 ## Exercises 
 
@@ -1008,8 +1202,6 @@ LANG=en_US.UTF-8
 7. git add -A; git commit -am "change line1 in todo.txt in master" 
 8. git merge feature/4712 
 ```
-
-<div class="page-break"></div>
 
 ### merge request with bitbucket
 
@@ -1046,8 +1238,6 @@ git pull --rebase
 ```
 
 
-<div class="page-break"></div>
-
 ## Snippets 
 
 ### publish lokal repo to server - bitbucket
@@ -1067,8 +1257,6 @@ git pull --rebase
  git commit -am "added testdatei"
  git push
  ```
-
-<div class="page-break"></div>
 
 ### failure-on-push-fix
 
@@ -1093,8 +1281,6 @@ git pull
 ## Step 3: re-push 
 git push 
 ```
-
-<div class="page-break"></div>
 
 ### failure-on-push-with-conflict
 
@@ -1153,8 +1339,6 @@ git commit
 git push 
 ```
 
-<div class="page-break"></div>
-
 ## Extras 
 
 ### Best practices
@@ -1174,8 +1358,6 @@ git push
   * Disable possibility to push -f for branch or event repo 
   
 
-<div class="page-break"></div>
-
 ### Using a mergetool to solve conflicts
 
 
@@ -1191,6 +1373,9 @@ git config --global merge.tool meld
 git config --global diff.tool meld
 ## Should be on Windows 10 
 git config --global mergetool.meld.path “/c/Users/Admin/AppData/Local/Programs/Meld/Meld.exe”
+## sometimes here 
+git config --global mergetool.meld.path "/c/Program Files (x86)/Meld/Meld.exe"
+
 ## do not create an .orig - file before merge 
 git config --global mergetool.keepBackup false
 ```  
@@ -1201,8 +1386,6 @@ git config --global mergetool.keepBackup false
 ## when you have conflict you can open the mergetool (graphical tool with )
 git mergetool
 ```
-
-<div class="page-break"></div>
 
 ## Help
 
@@ -1220,8 +1403,6 @@ git help log
 ## --> a webpage will open with content 
 
 ```
-
-<div class="page-break"></div>
 
 ## Documentation 
 
@@ -1255,5 +1436,3 @@ git help log
 * Github Action
 * Git Webhooks 
 ```
-
-<div class="page-break"></div>
