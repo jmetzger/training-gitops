@@ -4,7 +4,26 @@
 
   *  https://meldmerge.org/
 
-## Configuration in Git for Windwos (git bash) 
+## Find out if mergetool meld is available 
+
+```
+# Important: close and reopen git bash before doing that 
+# you can try to see, if meld can be executed by simply typing "meld"
+
+git mergetool --tool-help
+```
+
+## Configure, when it is found by mergetool --tool-help 
+
+```
+# you have to be in a git project 
+git config --global merge.tool meld
+git config --global diff.tool meld
+git config --global mergetool.keepBackup false
+git config --list
+```
+
+## If not found bei mergetool --tool-help :: Configuration in Git for Windows (git bash) 
 
 ```
 # you have to be in a git project 
