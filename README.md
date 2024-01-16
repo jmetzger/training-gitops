@@ -51,6 +51,7 @@
 
   1. github - actions - documentations
      * [github actions repo](https://github.com/actions/checkout)
+     * [default environment variables](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
 
   1. Nix kaputtmachen - so gehts
      * [Die 5 goldenenen Regeln](5-goldene-regeln.md) 
