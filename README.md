@@ -53,6 +53,7 @@
      * [github actions repo](https://github.com/actions/checkout)
      * [github actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=)
      * [default environment variables](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
+     * [Documentation github actions](https://docs.github.com/en/actions)
        
   1. Nix kaputtmachen - so gehts
      * [Die 5 goldenenen Regeln](5-goldene-regeln.md) 
