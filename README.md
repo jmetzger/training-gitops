@@ -20,6 +20,7 @@
      * [git checkout - used for branches and files](checkout.md)
      * [git merge](merge.md)
      * [git tag](tag.md)
+     * [git rm](rm.md)
    
   1. Advanced Commands 
      * [git reflog](reflog.md) 
