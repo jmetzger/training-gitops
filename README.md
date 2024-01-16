@@ -45,7 +45,7 @@
      * [Deploy to server with ssh](/github-actions/use-cases/deploy_ssh.yml)
 
   1. github actions - events (IMHO trigger)
-     * [Events)(f/github-actions/events.md)
+     * [Events](/github-actions/events.md)
      
   1. github actions - examples 
      * [Simple Workflow Test](/github-actions/examples/01-workflow-test.md)
