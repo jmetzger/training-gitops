@@ -10,7 +10,7 @@
      * [Installation micro8ks (Ubuntu)](#installation-micro8ks-ubuntu)
   
   1. Commands (with tipps & tricks) 
-     * [git add + Tipps & Tricks](#git-add-+-tipps-&-tricks)
+     * [git add + Tipps & Tricks](#git-add-+-tipps--tricks)
      * [git commit](#git-commit)
      * [git log](#git-log)
      * [git config](#git-config)
@@ -20,6 +20,7 @@
      * [git checkout - used for branches and files](#git-checkout---used-for-branches-and-files)
      * [git merge](#git-merge)
      * [git tag](#git-tag)
+     * [git rm](#git-rm)
    
   1. Advanced Commands 
      * [git reflog](#git-reflog)
@@ -38,22 +39,49 @@
      * [Create dependant jobs](#create-dependant-jobs)
      * [Create custom composite action](#create-custom-composite-action)
      * [Create custom docker action](#create-custom-docker-action)
+     * [If example](#if-example)
      * [Work with artefacts](#work-with-artefacts)
-     * [Create digitalocean-kubernetes.md](#create-digitalocean-kubernetes.md)
+     * [Create digitalocean-kubernetes.md](#create-digitalocean-kubernetesmd)
      * [Deploy to server with ssh](#deploy-to-server-with-ssh)
 
+  1. github actions - passing data 
+     * [passing data from step to step](#passing-data-from-step-to-step)
+
+  1. github actions - events (IMHO trigger)
+     * [Events](#events)
+     * [Required Status Checks](#required-status-checks)
+     
   1. github actions - examples 
      * [Simple Workflow Test](#simple-workflow-test)
      * [Checkout Repo](#checkout-repo)
      * [Push to repo](#push-to-repo)
+     * [Write secret to file and push to repo](#write-secret-to-file-and-push-to-repo)
+    
+  1. github actions - use case
+     * [Check lang-file before merging and disallow merging](#check-lang-file-before-merging-and-disallow-merging)
+     * [Run script from repo](#run-script-from-repo)
+     * [Deploy with ansbile using ssh](#deploy-with-ansbile-using-ssh)
 
+  1. github - actions - docker
+     * [Was darf in das Dockerfile rein](https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-action)
+)
+
+  1. github - actions GITHUB_OUTRPUT - GITHUB_SUMMARY
+     * [Write to summary page from within jobs](#write-to-summary-page-from-within-jobs)
+
+  1. github - actions - documentations
+     * [github actions repo](https://github.com/actions/checkout)
+     * [github actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=)
+     * [default environment variables](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
+     * [Documentation github actions](https://docs.github.com/en/actions)
+       
   1. Nix kaputtmachen - so gehts
      * [Die 5 goldenenen Regeln](#die-5-goldenenen-regeln)
 
   1. Tips & tricks 
      * [Beautified log](#beautified-log)
      * [Change already committed files and message](#change-already-committed-files-and-message)
-     * [Best practice - Delete origin,tracking and local branch after pull request/merge request](#best-practice---delete-origin,tracking-and-local-branch-after-pull-requestmerge-request)
+     * [Best practice - Delete origin,tracking and local branch after pull request/merge request](#best-practice---delete-origintracking-and-local-branch-after-pull-requestmerge-request)
      * [Change language to german - Linux](#change-language-to-german---linux)
      * [Reference tree without sha-1](#reference-tree-without-sha-1)
      * [Always do pull --rebase for master branch](#always-do-pull---rebase-for-master-branch)
@@ -351,6 +379,19 @@ git fetch --prune --prune-tags
 
 ```
 
+### git rm
+
+
+### Deleting files only from repo (not locally) 
+
+```
+git rm --cached filename.txt
+## Please be sure to commit the change afterwards
+## to reflect the changes in repo 
+git commit -am "my filename.txt was deleted"
+
+```
+
 ## Advanced Commands 
 
 ### git reflog
@@ -509,7 +550,18 @@ https://gittrainereu.github.io
 
   * ENV (Umgebungsvariablen, Variablen) 
   * Jobs -> Steps 
-  * Events 
+  * Events
+
+### Events 
+
+  * Events sind Ereignisse die stattfinden (man könnte auch sagen -> Trigger)
+  * Ref: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+
+#### Beispiele für Typen 
+
+  * pull_request
+    * if no activity types are specified, the workflow runs when a pull request is opened or reopened or when the head branch of the pull request is updated
+   
 
 ### Add a self-host runner
 
@@ -637,11 +689,20 @@ jobs:
 
 ### Walkthrough 
 
-```
-## new repo - e.g. 
-bash-action
+#### Step 1: create new repo 
 
-## action.yml 
+```
+## new repo - e.g.  <tln>-bash-action
+## z.B. f1-bash-action 
+```
+
+#### Step 2: create action.yml in repo (toplevel)
+
+```
+## action.yml - im toplevel
+```
+
+```
 name: 'Hello World'
 description: 'Greet someone'
 inputs:
@@ -656,19 +717,34 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - uses: actions/checkout@v4
     - run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
     - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      run: echo "random-id=$RANDOM" >> $GITHUB_OUTPUT
+      shell: bash  
+    - run: |
+        env
+        chmod u+x ${{ github.action_path }}/goodbye.sh
+        ${{ github.action_path }}/goodbye.sh
       shell: bash
-    - run: ${{ github.action_path }}/goodbye.sh
-      shell: bash
+```
 
+#### Step 3: Create script 
+
+```
 ## goodbye.sh 
 echo "Goodbye"
+```
 
+#### Step 4: workflow erstellen 
+
+```
 ### use it in other repo in workflow 
 ## .github/workflows/workflow-hello.yml 
+```
+
+```
 on: [push]
 
 jobs:
@@ -676,13 +752,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Greet Again 
 
-  steps:
-    - id: foo
-      uses: gittrainereu/bash-action@main
-      with:
-        who-to-greet: 'Mona the Octocat'
-    - run: echo random-number ${{ steps.foo.outputs.random-number }}
-      shell: bash
+    steps:
+      - id: foo
+        uses: gittrainereu/bash-action@main
+        with:
+          who-to-greet: 'Mona the Octocat'
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+        shell: bash
 ```
 
 ### Type of actions 
@@ -742,7 +818,7 @@ runs:
 
 echo "Hello $1"
 time=$(date)
-echo "::set-output name=time::$time"
+echo "time=$time" >> $GITHUB_OUTPUT
 ```
 
 
@@ -769,6 +845,24 @@ jobs:
 ### Reference: 
 
   * https://docs.github.com/en/actions/creating-actions/creating-a-docker-container-action
+
+### If example
+
+
+
+```
+steps:
+ - name: Check for outdated packages
+   id: vars
+   run: |
+     OUTDATED=$(npm outdated) || true
+     
+     echo "OUTDATED='$OUTDATED'" >> $GITHUB_OUTPUT
+      
+ - name: Upgrade
+   if: ${{ steps.vars.outputs.OUTDATED != '' }}
+   run: npm upgrade
+```
 
 ### Work with artefacts
 
@@ -871,7 +965,88 @@ Integrate all clusters -> Save (Button) (or only one specific cluster)
 ### Deploy to server with ssh
 
 
-### Requirements 
+### Deploying to server (without additional action)
+
+#### Step 0: Setup Server with apache2 (Debian / Ubuntu) 
+
+```
+apt install httpd
+```
+
+#### Step 1:
+
+```
+## Auf Zielsystem (Linux-Server Ubuntu/Debian) public / private key erstellt 
+## und pub-key in authorized_keys eingetragen.
+
+cd /root/.ssh 
+## Achtung bitte rsa und 4096 nehmen, Beschreibung von github
+## zum Erstellen eines pub/private keys funktioniert für github runner nicht 
+## be nachfrage name key-> github-actions
+ssh-keygen -t rsa -b 4096 -C "foo@foo.com"
+
+cat github-actions.pub >> authorized_keys
+## Kopieren dieses Inhalt in die Secrets des repositories, von dem aus
+## ihr deployen wollt 
+cat github-actions
+```
+
+#### Step 2: Eintrag in die Secretes 
+
+```
+## Repository -> Settings -> Secrets -> Actions -> New Secret for Repo 
+SSH_PRIVATE_KEY 
+## Hier dann der Wert von github-actions 
+```
+
+#### Step 2.5: add files to repo in dist
+
+```
+##add file with content
+dist/test.html 
+
+```
+
+#### Step 3: Workflow 
+
+```
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+  
+jobs:
+  run_pull:
+    name: run pull
+    # That is the image we are running on 
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: checkout 
+      uses: actions/checkout@v4
+    - name: install ssh keys
+      # check this thread to understand why its needed:
+      # https://stackoverflow.com/a/70447517
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+    - name: connect and execute
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "ls -la"
+    - name: infos
+      run: |
+        ls -la
+        env
+    - name: synchronize 
+      run: rsync -avz dist/ root@${{ secrets.SSH_HOST }}:/var/www/html/ 
+   
+    - name: cleanup
+      run: rm -rf ~/.ssh
+```
+
+### Requirements (OLD VERSION from here) 
 
 ```
 ## apache is installed with php 
@@ -964,11 +1139,79 @@ jobs:
 ### Schritt 3: Testen und debuggen 
 
 ```
-
 ### Ref: 
 
   * https://zellwk.com/blog/github-actions-deploy/
   
+
+## github actions - passing data 
+
+### passing data from step to step
+
+
+```
+name: stepscheck
+
+on: 
+  push:
+ 
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Set color
+        id: color-selector
+        run: |
+          echo $GITHUB_OUTPUT # test
+          echo "SELECTED_COLOR=green" >> "$GITHUB_OUTPUT"
+      - name: Get color
+        env:
+          SELECTED_COLOR: ${{ steps.color-selector.outputs.SELECTED_COLOR }}
+        run: echo "The selected color is $SELECTED_COLOR"
+```
+         
+
+## github actions - events (IMHO trigger)
+
+### Events
+
+
+```
+9. events 
+
+9.1. Nur triggern, wenn bestimmte Dateien geändert wurden
+
+on:
+  pull_request:
+    paths:
+      - '**.js'
+
+
+9.2 Branches ausschliessen
+
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches-ignore:    
+      - 'mona/octocat'
+      - 'releases/**-alpha'
+    # Sequence of patterns matched against refs/tags
+    tags-ignore:        
+      - v2
+      - v1.*
+```
+
+### Refs:
+
+  * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+  * https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#push
+ 
+
+### Required Status Checks
+
+
+![image](https://github.com/jmetzger/training-gitops/assets/1933318/d6a4f73a-1c91-4a38-b0c7-816c46aa8705)
 
 ## github actions - examples 
 
@@ -1080,6 +1323,320 @@ jobs:
         uses: ad-m/github-push-action@master
         
 ```
+
+### Write secret to file and push to repo
+
+
+```
+name: secret and push 
+
+on: [push]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    permissions:                # Job-level permissions configuration starts here
+      contents: write           # 'write' access to repository contents
+      pull-requests: write      # 'write' access to pull requests
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      - name: Create local changes 1
+        run: |
+          touch somefile.txt 
+      - name: Create local secret 
+        shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.SECRET_SUPER_SECRET }}
+        run: |
+          echo "$SUPER_SECRET" 
+          echo "foo" > myfile 
+          echo 
+          echo "OUTPUT 1: -------"
+          cat myfile
+          echo "EOF OUTPUT1"
+          echo 
+          echo "OUTPUT 2: -------"
+          echo "$SUPER_SECRET" >> myfile
+          cat myfile 
+          echo "EOF OUTPUT 2"
+          echo 
+          echo "OUTPUT 3: -------"
+          echo "foo2" >> myfile 
+          cat myfile 
+          echo "EOF OUTPUT 3"
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git commit -a -m "Add changes"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+```
+
+## github actions - use case
+
+### Check lang-file before merging and disallow merging
+
+
+### Step 1: Prerequisites (in master) 
+
+```
+## only or locally 
+## create files in master
+dist/index.html
+dist/en/index.html
+
+```
+
+```
+## workflow yaml 
+.github/workflows/lang.yaml 
+```
+
+```
+name: langchecker
+
+on:
+  push:
+    branches:    
+      - 'feature/**'
+    paths:
+      - 'dist/index.html'
+
+jobs:
+  translation-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      - run: |
+          ls -la 
+          git branch 
+          git branch -r
+          # grep always returns 1 by design if does not find a result 
+          echo "--HEADER--" > ANALYZER 
+          git diff --name-only HEAD origin/master -- dist/en/index.html >> ANALYZER 
+          COUNT=$(cat ANALYZER | grep -cE "(--HEADER--|dist/en/index.html)")
+          # 1 - Only HEADER line will be present  
+          if [ $COUNT -eq 1 ] ; then  echo "dist/en/index.html not changed"; exit 1; else echo "Change in lang detected - Happy"; fi
+ ```
+
+```
+git add -A; git commit -am "lang files"; git push
+```
+
+## Step 2: create feature 
+
+´´´
+git checkout -b feature/6 
+´´´
+
+```
+## change
+dist/index.html
+```
+
+```
+git add -A; git commit -am "new version2
+git push -u origin feature/6
+```
+
+```
+Workflow müsste jetzt unter actions triggern und fehler
+werden, weil dist/en/index.html (englische Version) nicht geämndert wurde
+```
+
+### Run script from repo
+
+
+### Step 1: Create script in repo 
+
+```
+## scripts/deploy.sh
+```
+
+```
+##!/bin/bash 
+
+echo "test this" 
+env
+echo $GITHUB_OUTPUT 
+echo "VORNAME=Hans" >> $GITHUB_OUTPUT
+```
+
+### Step 2: .github/workflows/blank.yml
+
+```
+name: CI
+
+## Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  run-playbooks:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: run deploy 
+        shell: bash
+        run: |
+         cd scripts
+         chmod u+x ./deploy.sh
+         ./deploy.sh 
+```
+
+### Deploy with ansbile using ssh
+
+
+### Create files 
+
+```
+## infrastructure/ansible/setup-prod.yml
+```
+
+```
+---
+- hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      become_user: root
+      apt:
+        state: present
+        name:
+          - htop
+```
+
+```
+## infrastructure/ansible/hosts
+## anpassen mit deinem host un der ip (Trainer fragen ;o))
+```
+
+```
+gr1.t3isp.de ansible_host=167.172.179.197
+```
+
+
+
+### Create workflow 
+
+```
+name: CI
+
+## Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  run-playbooks:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v4
+      - name: Setup SSH 
+        shell: bash
+        run: |
+         eval `ssh-agent -s`
+         mkdir -p /home/runner/.ssh/
+         touch /home/runner/.ssh/id_rsa
+         echo -e "${{secrets.SSH_PRIVATE_KEY}}" > /home/runner/.ssh/id_rsa
+         chmod 700 /home/runner/.ssh/id_rsa
+         ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
+      - name: Run ansible script
+        shell: bash 
+        run: |
+          cd infrastructure/ansible
+          cat setup-prod.yml
+          ansible-playbook -vvv --private-key /home/runner/.ssh/id_rsa -u ${{secrets.SSH_USER}} -i hosts setup-prod.yml
+```
+
+## github - actions - docker
+
+### Was darf in das Dockerfile rein
+
+  * https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-action
+
+## github - actions GITHUB_OUTRPUT - GITHUB_SUMMARY
+
+### Write to summary page from within jobs
+
+
+  * Writing to $GITHUB_STEP_SUMMARY writes to a summry, that is visible on the summary of the actions - run 
+
+```
+name: Jochen's nicer workflow 
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+ 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run a one-line script
+        run: | 
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
+          pwd 
+          ls -la
+          #/bin/false
+          echo "### Hello world in build after false ! :rocket:" >> $GITHUB_STEP_SUMMARY
+    
+  deploy:
+    
+    # needs a succesful build 
+    # THAT IS IMPORTANT 
+    needs: build 
+    runs-on: ubuntu-latest 
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Starting the deploy 
+        run: | 
+          echo "starting the deployment process" 
+          ls -la
+          echo "### Hello world in deploy after false ! :rocket:" >> $GITHUB_STEP_SUMMARY
+```
+
+## github - actions - documentations
+
+### github actions repo
+
+  * https://github.com/actions/checkout
+
+### github actions marketplace
+
+  * https://github.com/marketplace?category=&query=&type=actions&verification=
+
+### default environment variables
+
+  * https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables
+
+### Documentation github actions
+
+  * https://docs.github.com/en/actions
 
 ## Nix kaputtmachen - so gehts
 
@@ -1267,7 +1824,7 @@ git pull --rebase
 git push
 Password for 'https://erding2017@bitbucket.org':
 To https://bitbucket.org/erding2017/git-remote-jochen.git
- ! [rejected](fetch first)
+ ! [rejected]        master -> master (fetch first)
 error: failed to push some refs to 'https://erding2017@bitbucket.org/erding2017/git-remote-jochen.git'
 hint: Updates were rejected because the remote contains work that you do
 hint: not have locally. This is usually caused by another repository pushing
@@ -1293,7 +1850,7 @@ git push
 git push
 Password for 'https://erding2017@bitbucket.org':
 To https://bitbucket.org/erding2017/git-remote-jochen.git
- ! [rejected](fetch first)
+ ! [rejected]        master -> master (fetch first)
 ....
 ## Step 2: Integrate changes from online 
 git pull
@@ -1365,7 +1922,26 @@ git push
 
   *  https://meldmerge.org/
 
-### Configuration in Git for Windwos (git bash) 
+### Find out if mergetool meld is available 
+
+```
+## Important: close and reopen git bash before doing that 
+## you can try to see, if meld can be executed by simply typing "meld"
+
+git mergetool --tool-help
+```
+
+### Configure, when it is found by mergetool --tool-help 
+
+```
+## you have to be in a git project 
+git config --global merge.tool meld
+git config --global diff.tool meld
+git config --global mergetool.keepBackup false
+git config --list
+```
+
+### If not found bei mergetool --tool-help :: Configuration in Git for Windows (git bash) 
 
 ```
 ## you have to be in a git project 
