@@ -17,7 +17,9 @@ und pub-key in authorized_keys eingetragen.
 cd /root/.ssh 
 # Achtung bitte rsa und 4096 nehmen, Beschreibung von github
 # zum Erstellen eines pub/private keys funktioniert für github runner nicht 
+# be nachfrage name key-> github-actions
 ssh-keygen -t rsa -b 4096 -C "foo@foo.com"
+
 cat github-actions.pub >> authorized_keys
 # Kopieren dieses Inhalt in die Secrets des repositories, von dem aus
 # ihr deployen wollt 
