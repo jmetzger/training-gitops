@@ -46,6 +46,7 @@
 
   1. github actions - events (IMHO trigger)
      * [Events](/github-actions/events.md)
+     * [Required Status Checks](/github-actions/required-status-checks.md)
      
   1. github actions - examples 
      * [Simple Workflow Test](/github-actions/examples/01-workflow-test.md)
