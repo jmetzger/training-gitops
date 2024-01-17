@@ -5,8 +5,9 @@
 ```
 # new repo - e.g. 
 bash-action
+```
 
-# action.yml 
+# action.yml - im toplevel  
 name: 'Hello World'
 description: 'Greet someone'
 inputs:
