@@ -2,13 +2,20 @@
 
 ## Walkthrough 
 
+### Step 1: create new repo 
+
 ```
-# new repo - e.g. 
-bash-action
+# new repo - e.g.  <tln>-bash-action
+# z.B. f1-bash-action 
+```
+
+### Step 2: create action.yml in repo (toplevel)
+
+```
+# action.yml - im toplevel
 ```
 
 ```
-# action.yml - im toplevel  
 name: 'Hello World'
 description: 'Greet someone'
 inputs:
@@ -30,12 +37,23 @@ runs:
       shell: bash
     - run: ${{ github.action_path }}/goodbye.sh
       shell: bash
+```
 
+### Step 3: Create script 
+
+```
 # goodbye.sh 
 echo "Goodbye"
+```
 
+### Step 4: workflow erstellen 
+
+```
 ## use it in other repo in workflow 
 # .github/workflows/workflow-hello.yml 
+```
+
+```
 on: [push]
 
 jobs:
