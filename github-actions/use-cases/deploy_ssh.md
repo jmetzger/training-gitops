@@ -1,7 +1,34 @@
 # Deploy with ssh 
 
-## Deploying to server (without additional 
+## Deploying to server (without additional action)
 
+### Step 1:
+
+```
+Auf Zielsystem (Linux-Server Ubuntu/Debian) public / private key erstellt 
+und pub-key in authorized_keys eingetragen.
+
+cd /root/.ssh 
+# Achtung bitte rsa und 4096 nehmen, Beschreibung von github
+# zum Erstellen eines pub/private keys funktioniert für github runner nicht 
+ssh-keygen -t rsa -b 4096 -C "foo@foo.com"
+cat github-actions.pub >> authorized_keys
+# Kopieren dieses Inhalt in die Secrets des repositories, von dem aus
+# ihr deployen wollt 
+cat github-actions
+```
+
+### Step 2: Eintrag in die Secretes 
+
+```
+# Repository -> Settings -> Secrets -> Actions -> New Secret for Repo 
+SSH_PRIVATE_KEY 
+# Hier dann der Wert von github-actions 
+```
+
+### Step 3: Workflow 
+
+```
 on:
   push:
     branches:
@@ -22,11 +49,12 @@ jobs:
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-    - name: connect and pull
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && exit"
+    - name: connect and execute
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p /var/www/html"
+    - name: synchronize 
+      run: rsync -avz ./dist root@${{ secrets.SSH_HOST }}:/var/www/html/ 
     - name: cleanup
       run: rm -rf ~/.ssh
-
 ```
 
 ## Requirements (OLD VERSION from here) 
