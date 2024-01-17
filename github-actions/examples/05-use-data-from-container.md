@@ -1,9 +1,5 @@
 # Use data from container 
 
-## Insights 
-
-
-
 ## Example 
 
 ```
@@ -24,3 +20,7 @@ jobs:
         run: echo "The time was ${{ steps.hello.outputs.time }}"
 
 ```
+
+## Warum funktioniert ? 
+
+  * Was wird als output in der action von hello-wordl-docker-action definiert ? 
