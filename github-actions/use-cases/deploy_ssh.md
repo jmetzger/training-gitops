@@ -2,6 +2,12 @@
 
 ## Deploying to server (without additional action)
 
+### Step 0: Setup Server with apache2 (Debian / Ubuntu) 
+
+```
+apt install httpd
+```
+
 ### Step 1:
 
 ```
