@@ -49,6 +49,7 @@ on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
   
 jobs:
@@ -58,6 +59,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: checkout 
+      uses: actions/checkout@v4
     - name: install ssh keys
       # check this thread to understand why its needed:
       # https://stackoverflow.com/a/70447517
@@ -67,8 +70,13 @@ jobs:
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
     - name: connect and execute
       run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "ls -la"
+    - name: infos
+      run: |
+        ls -la
+        env
     - name: synchronize 
-      run: rsync -avz ./dist root@${{ secrets.SSH_HOST }}:/var/www/html/ 
+      run: rsync -avz dist/ root@${{ secrets.SSH_HOST }}:/var/www/html/ 
+   
     - name: cleanup
       run: rm -rf ~/.ssh
 ```
