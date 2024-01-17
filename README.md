@@ -59,6 +59,7 @@
     
   1. github actions - use case
      * [Check lang-file before merging and disallow merging](github-actions/use-cases/check-langfile.md)
+     * [Run script from repo](github-actions/use-cases/run-script-from-repo.sh)
   
   1. github - actions - documentations
      * [github actions repo](https://github.com/actions/checkout)
