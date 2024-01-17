@@ -11,8 +11,8 @@ apt install httpd
 ### Step 1:
 
 ```
-Auf Zielsystem (Linux-Server Ubuntu/Debian) public / private key erstellt 
-und pub-key in authorized_keys eingetragen.
+# Auf Zielsystem (Linux-Server Ubuntu/Debian) public / private key erstellt 
+# und pub-key in authorized_keys eingetragen.
 
 cd /root/.ssh 
 # Achtung bitte rsa und 4096 nehmen, Beschreibung von github
