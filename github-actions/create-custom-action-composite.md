@@ -7,6 +7,7 @@
 bash-action
 ```
 
+```
 # action.yml - im toplevel  
 name: 'Hello World'
 description: 'Greet someone'
