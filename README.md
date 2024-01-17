@@ -42,7 +42,7 @@
      * [If example](/github-actions/if-example.md)
      * [Work with artefacts](/github-actions/work-with-artefacts.md)
      * [Create digitalocean-kubernetes.md](/github-actions/digitalocean-kubernetes.md) 
-     * [Deploy to server with ssh](/github-actions/use-cases/deploy_ssh.yml)
+     * [Deploy to server with ssh](/github-actions/use-cases/deploy_ssh.md)
 
   1. github actions - passing data 
      * [passing data from step to step](github-actions/steps-data.md)
