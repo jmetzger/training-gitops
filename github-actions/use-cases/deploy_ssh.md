@@ -34,6 +34,14 @@ SSH_PRIVATE_KEY
 # Hier dann der Wert von github-actions 
 ```
 
+### Step 2.5: add files to repo in dist
+
+```
+#add file with content
+dist/test.html 
+
+```
+
 ### Step 3: Workflow 
 
 ```
@@ -58,7 +66,7 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
     - name: connect and execute
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p /var/www/html"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "ls -la"
     - name: synchronize 
       run: rsync -avz ./dist root@${{ secrets.SSH_HOST }}:/var/www/html/ 
     - name: cleanup
