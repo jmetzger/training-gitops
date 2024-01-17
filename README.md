@@ -44,6 +44,9 @@
      * [Create digitalocean-kubernetes.md](/github-actions/digitalocean-kubernetes.md) 
      * [Deploy to server with ssh](/github-actions/use-cases/deploy_ssh.yml)
 
+  1. github actions - passing data 
+     * [passing data from step to step](github-actions/steps-data.md)
+
   1. github actions - events (IMHO trigger)
      * [Events](/github-actions/events.md)
      * [Required Status Checks](/github-actions/required-status-checks.md)
@@ -57,7 +60,6 @@
   1. github actions - use case
      * [Check lang-file before merging and disallow merging](github-actions/use-cases/check-langfile.md)
   
-       
   1. github - actions - documentations
      * [github actions repo](https://github.com/actions/checkout)
      * [github actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=)
