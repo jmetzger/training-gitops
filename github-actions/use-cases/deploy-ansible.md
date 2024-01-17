@@ -62,7 +62,6 @@ jobs:
       - name: Run ansible script
         shell: bash 
         run: |
-          service ssh status
           cd infrastructure/ansible
           cat setup-prod.yml
           ansible-playbook -vvv --private-key /home/runner/.ssh/id_rsa -u ${{secrets.SSH_USER}} -i hosts setup-prod.yml
