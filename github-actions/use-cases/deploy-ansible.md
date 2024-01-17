@@ -1,5 +1,36 @@
 # Deploy ansible 
 
+## Create files 
+
+```
+# infrastructure/ansible/setup-prod.yml
+```
+
+```
+---
+- hosts: all
+  tasks:
+    - name: install packages
+      become: true
+      become_user: root
+      apt:
+        state: present
+        name:
+          - htop
+```
+
+```
+# infrastructure/ansible/hosts
+# anpassen mit deinem host un der ip (Trainer fragen ;o))
+```
+
+```
+gr1.t3isp.de ansible_host=167.172.179.197
+```
+
+
+
+## Create workflow 
 
 ```
 name: CI
@@ -34,5 +65,5 @@ jobs:
           service ssh status
           cd infrastructure/ansible
           cat setup-prod.yml
-          ansible-playbook -vvv --private-key /home/runner/.ssh/id_rsa -u ${{secrets.SSH_USER}} -i hosts.yml setup-prod.yml
+          ansible-playbook -vvv --private-key /home/runner/.ssh/id_rsa -u ${{secrets.SSH_USER}} -i hosts setup-prod.yml
 ```
