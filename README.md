@@ -61,7 +61,11 @@
      * [Check lang-file before merging and disallow merging](github-actions/use-cases/check-langfile.md)
      * [Run script from repo](github-actions/use-cases/run-script-from-repo.sh)
      * [Deploy with ansbile using ssh](github-actions/use-cases/deploy-ansible.md)
-  
+
+  1. github - actions - docker
+     * [Was darf in das Dockerfile rein](https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-actions
+)
+
   1. github - actions - documentations
      * [github actions repo](https://github.com/actions/checkout)
      * [github actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=)
