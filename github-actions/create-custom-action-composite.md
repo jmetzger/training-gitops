@@ -30,12 +30,15 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - run: ls -la
     - run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
     - id: random-number-generator
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
       shell: bash
-    - run: ${{ github.action_path }}/goodbye.sh
+    - run: |
+        chmod u+x goodbye.sh
+        ${{ github.action_path }}/goodbye.sh
       shell: bash
 ```
 
