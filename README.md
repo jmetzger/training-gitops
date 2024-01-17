@@ -53,6 +53,11 @@
      * [Checkout Repo](/github-actions/examples/02-checkout-repo.md)
      * [Push to repo](/github-actions/examples/03-push-to-repo.md)
      * [Write secret to file and push to repo](github-actions/examples/04-secret-and-push-to-repo.md)
+    
+  1. github actions - use case
+     * [Check lang-file before merging and disallow merging](github-actions/use-cases/check-langfile.md)
+  
+       
   1. github - actions - documentations
      * [github actions repo](https://github.com/actions/checkout)
      * [github actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=)
