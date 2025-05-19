@@ -33,8 +33,11 @@
   1. github pages
      * [Github Pages](/github/pages.md) 
 
-  1. github actions 
+  1. github actions - Theorie
+     * [Was ist ci/cd ?][/ci-cd/overview.md)
      * [General overview](/github-actions/general.md)
+    
+  1. github actions      
      * [Add a self-host runner](/github-actions/add-runner.md)
      * [Create dependant jobs](/github-actions/dependant-jobs.md)
      * [Create custom composite action](/github-actions/create-custom-action-composite.md)
