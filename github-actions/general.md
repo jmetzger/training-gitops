@@ -27,6 +27,7 @@
 ## Actions 
 
   * Bei einer **action** handelt es sich um eine benutzerdefinierte Anwendung für die GitHub Actions-Plattform zur Ausführung einer komplexen und häufig ausgeführten Aufgabe
+  * Wenn ich sie verwende, spare ich code 
   * Beispiele von **actions** in github actions
 
 
