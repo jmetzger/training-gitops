@@ -36,6 +36,9 @@
   1. github actions - Theorie
      * [Was ist ci/cd ?](/ci-cd/overview.md)
      * [General overview](/github-actions/general.md)
+
+  1. github actions - Praxis I
+     * [Den 1. Workflow erstellen](/github-actions/simple-workflow.md)
     
   1. github actions      
      * [Add a self-host runner](/github-actions/add-runner.md)
