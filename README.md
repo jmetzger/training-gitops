@@ -66,7 +66,7 @@
      * [Was darf in das Dockerfile rein](https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-actions
 )
 
-  1. github - actions GITHUB_OUTRPUT - GITHUB_SUMMARY
+  1. github - actions GITHUB_OUTPUT - GITHUB_SUMMARY
      * [Write to summary page from within jobs](github-actions/write_to_summary.md) 
 
   1. github - actions - documentations
