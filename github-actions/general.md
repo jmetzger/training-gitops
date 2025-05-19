@@ -10,9 +10,36 @@
 
 ## Workflows 
 
-  * ENV (Umgebungsvariablen, Variablen) 
-  * Jobs -> Steps 
-  * Events
+Mit einfachen Worten:
+
+> **Ein Workflow in GitHub Actions ist ein automatisierter Ablauf, der etwas für dich erledigt, sobald etwas in deinem GitHub-Projekt passiert.**
+
+Zum Beispiel:
+
+* Du machst einen Push → automatisch wird dein Code getestet.
+* Du öffnest einen Pull Request → dein Projekt wird gebaut und überprüft.
+* Du willst regelmäßig etwas tun → GitHub kann z. B. jeden Tag um 6 Uhr morgens etwas starten.
+
+Ein Workflow besteht aus:
+
+* **Trigger** (Was löst den Ablauf aus? z. B. `push`, `pull_request`, `schedule`)
+* **Jobs** (Was soll getan werden?)
+* **Steps** (Wie wird es gemacht? z. B. Befehle oder Actions)
+
+Ein einfaches Beispiel:
+
+```yaml
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm test
+```
+
+➡️ Dieser Workflow testet automatisch deinen Code bei jedem `git push`.
 
 ## Events 
 
