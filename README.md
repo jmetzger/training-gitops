@@ -34,7 +34,7 @@
      * [Github Pages](/github/pages.md) 
 
   1. github actions - Theorie
-     * [Was ist ci/cd ?][/ci-cd/overview.md)
+     * [Was ist ci/cd ?](/ci-cd/overview.md)
      * [General overview](/github-actions/general.md)
     
   1. github actions      
