@@ -1,14 +1,7 @@
 # gitops-Training  
 
 ## Agenda 
-
-  1. Installation (GIT) 
-     * [GIT auf Ubuntu/Debian installieren](installation-ubuntu-debian.md)
-     * [GIT unter Windows installieren](https://git-scm.com/download/win)
-  
-  1. Kubernetes 
-     * [Installation micro8ks (Ubuntu)](/kubernetes/installation-micro8ks-ubuntu.md)
-  
+ 
   1. Commands (with tipps & tricks) 
      * [git add + Tipps & Tricks](add.md)
      * [git commit](commit.md)
@@ -113,5 +106,12 @@
      * [GIT Book EN](https://git-scm.com/book/en/v2)
      * [GIT Book DE](https://git-scm.com/book/de/v2)
      * [Third Party Tools](tooling.md)
+
+## Backlog  
      
-   
+  1. Installation (GIT) 
+     * [GIT auf Ubuntu/Debian installieren](installation-ubuntu-debian.md)
+     * [GIT unter Windows installieren](https://git-scm.com/download/win)
+  
+  1. Kubernetes 
+     * [Installation micro8ks (Ubuntu)](/kubernetes/installation-micro8ks-ubuntu.md) 
