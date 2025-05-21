@@ -109,6 +109,9 @@
      * [GIT Book EN](https://git-scm.com/book/en/v2)
      * [GIT Book DE](https://git-scm.com/book/de/v2)
      * [Third Party Tools](tooling.md)
+    
+  1. Documentation - Git-Server installieren
+     * [Git-Server auf Synology NAS installieren](/git-server/git-server-auf-synology.md)
 
 ## Backlog  
      
