@@ -1,6 +1,9 @@
 # gitops-Training  
 
 ## Agenda 
+
+  1. Grundlagen
+     * [Grundlagen](https://schulung.t3isp.de/documents/pdfs/git/git-training.pdf)
  
   1. Commands (with tipps & tricks) 
      * [git add + Tipps & Tricks](add.md)
