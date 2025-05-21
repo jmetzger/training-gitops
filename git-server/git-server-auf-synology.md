@@ -55,24 +55,6 @@
 
 ---
 
-## 🧰 **Variante 2: Docker-GitLab oder Gitea (wenn du Web-GUI willst)**
+## Referenz:
 
-### Gitea:
-
-1. **Docker installieren** (falls noch nicht geschehen)
-2. **Gitea-Container starten** (einfach via Container Manager oder mit Docker Compose)
-3. Zugriff per Web-GUI: Benutzer, Repos, Berechtigungen etc.
-
-> Vorteil: Admin-Weboberfläche, einfache Verwaltung von Repos, Benutzerkonten, Pull Requests usw.
-
----
-
-## 🔐 Tipps zu Sicherheit
-
-* Nutze SSH-Schlüssel statt Passwortauthentifizierung.
-* Konfiguriere Firewall/Portweiterleitungen sicher.
-* Ggf. VPN-Verbindung nutzen, um das NAS nicht direkt im Internet zugänglich zu machen.
-
----
-
-Möchtest du lieber eine Weboberfläche wie GitLab oder Gitea auf deinem NAS einrichten? Dann kann ich dir ein passendes Setup dafür schreiben.
+  * https://kb.synology.com/de-de/DSM/help/Git/git?version=7
