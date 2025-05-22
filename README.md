@@ -32,10 +32,7 @@
      * [publish lokal repo to server - bitbucket](local-public.md)
      * [failure-on-push-fix](failure-push.md)
      * [failure-on-push-with-conflict](failure-push-conflict.md)
-     
-  1. Git - Extras 
-     * [Best practices](bp.md) 
-   
+        
   1. Git - Documentation 
      * [GIT Pdf](http://schulung.t3isp.de/documents/pdfs/git/git-training.pdf) 
      * [GIT Book EN](https://git-scm.com/book/en/v2)
@@ -100,30 +97,30 @@
 ## Extras - github actions 
 
 
+## Extras - git 
 
-
+  1. Git - Best practices 
+     * [Die 5 goldenenen Regeln - nix kaputtmachen so gehts](5-goldene-regeln.md) 
+     * [Best practices](bp.md)
+  1. Git - Advanced Commands
+      * [git reflog](reflog.md)
+    
 ## Backlog  
      
-  1. Installation (GIT) 
+  1. Git - Installation (GIT) 
      * [GIT auf Ubuntu/Debian installieren](installation-ubuntu-debian.md)
      * [GIT unter Windows installieren](https://git-scm.com/download/win)
   
-  1. Git - Advanced Commands 
-     * [git reflog](reflog.md)
-
-  1. Git - Best practices gehts
-     * [Die 5 goldenenen Regeln - nix kaputtmachen so gehts](5-goldene-regeln.md) 
-
   1. Git - Tipps & Tricks
      * [Best practice - Delete origin,tracking and local branch after pull request/merge request](best-practice-delete-branch.md)
      * [Change language to german - Linux](linux-english.md)
      * [Reference tree without sha-1](tree-no-sha.md)
      * [Always do pull --rebase for master branch](master-pull-rebase.md)
 
-  1. github pages
+  1. Git - github pages
      * [Github Pages](/github/pages.md)
     
-  1. Documentation (Tools)
+  1. Git - Documentation (Tools)
      * [Third Party Tools](tooling.md)   
 
   1. Kubernetes 
