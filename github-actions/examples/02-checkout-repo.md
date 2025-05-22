@@ -19,7 +19,7 @@ jobs:
     steps:
 
       - name: Checke repo aus
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         
       - run: |
           ls -la
