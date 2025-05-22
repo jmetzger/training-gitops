@@ -49,6 +49,9 @@
      * [Übung 1: Den 1. Workflow erstellen](/github-actions/simple-workflow.md)
      * [Übung 2: Das repo auschecken](/github-actions/examples/02-checkout-repo.md)
 
+  1. github actions - Praxis II (Arbeiten mit Outputs)
+     * [Outputs zwischen jobs](github-actions/examples/06-tag-auto-erstellung-und-setzen.md)
+
   1. github actions      
      * [Create dependant jobs](/github-actions/dependant-jobs.md)
      * [Create custom composite action](/github-actions/create-custom-action-composite.md)
