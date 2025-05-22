@@ -1,5 +1,26 @@
 # Tag automatisch erstellen und nächsten Schritt setzen 
 
+## Vorbereitung 
+
+  * Der token wird von Github automatisch erstellt, aber du musst dafür Sorge tragen, dass die Schreibrechte auch im Workflow möglich sind
+
+✅ Checkliste: Fehlerbehebung
+1. Hat dein Repository Schreibrechte für GITHUB_TOKEN?
+In privaten Repositories oder Organisationen kann der Token eingeschränkt sein.
+
+🔍 Prüfe:
+
+Gehe zu Repository → Settings → Actions → General
+
+Scrolle zu "Workflow permissions"
+
+Wähle:
+
+✅ Read and write permissions
+
+
+
+
 ## Beispiel 1: 
 
 ```
