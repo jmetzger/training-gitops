@@ -17,11 +17,14 @@
      * [git merge](merge.md)
      * [git tag](tag.md)
      * [git rm](rm.md)
-   
+
+  1. Git - mergetool
+     * [mergetool auf der Kommandozeile verwenden](mergetools.md)
+      
   1. Git - Advanced Commands 
      * [git reset - Back in Time](reset.md)   
 
-  1. Git - Tips & tricks 
+  1. Git - Tipps & tricks 
      * [Beautified log](beautify-log.md)
      * [Change already committed files and message](commit-amend.md) 
    
