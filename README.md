@@ -46,7 +46,8 @@
      * [General overview](/github-actions/general.md)
 
   1. github actions - Praxis I
-     * [Den 1. Workflow erstellen](/github-actions/simple-workflow.md)
+     * [Übung 1: Den 1. Workflow erstellen](/github-actions/simple-workflow.md)
+     * [Übung 2: Das repo auschecken](/github-actions/examples/02-checkout-repo.md)
 
   1. github actions      
      * [Create dependant jobs](/github-actions/dependant-jobs.md)
@@ -66,7 +67,6 @@
      
   1. github actions - examples 
      * [Simple Workflow Test](/github-actions/examples/01-workflow-test.md)
-     * [Checkout Repo](/github-actions/examples/02-checkout-repo.md)
      * [Push to repo](/github-actions/examples/03-push-to-repo.md)
      * [Write secret to file and push to repo](github-actions/examples/04-secret-and-push-to-repo.md)
     
