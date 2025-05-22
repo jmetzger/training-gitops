@@ -48,6 +48,7 @@
   1. github actions - Praxis I
      * [Übung 1: Den 1. Workflow erstellen](/github-actions/simple-workflow.md)
      * [Übung 2: Das repo auschecken](/github-actions/examples/02-checkout-repo.md)
+     * [Übung 3: Workflow in Container ausführen](/github-actions/examples/08-run-job-in-container.md)
 
   1. github actions - Praxis II (Arbeiten mit Outputs)
      * [Outputs zwischen jobs](github-actions/examples/06-tag-auto-erstellung-und-setzen.md)
