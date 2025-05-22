@@ -94,7 +94,7 @@
      * [Install docker on Ubuntu](/docker/install-ubuntu.md)
      * [Important commands](/docker/wichtigste-befehle.md)  
        
-## Teilnenmerfragen 
+## Teilnehmerfragen 
 
   1. Git - Server
      * [Git-Server auf Synology NAS installieren](/git-server/git-server-auf-synology.md) 
