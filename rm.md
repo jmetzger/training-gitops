@@ -1,5 +1,11 @@
 # git rm
 
+## Delete file in working directory, staging and repo 
+
+```
+git rm filename.txt 
+```
+
 ## Deleting files only from repo (not locally) 
 
 ```
