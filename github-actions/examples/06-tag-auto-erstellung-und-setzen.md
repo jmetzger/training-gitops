@@ -12,6 +12,9 @@ Scrolle zu "Workflow permissions"
 Wähle:
 ✅ Read and write permissions
 
+![image](https://github.com/user-attachments/assets/b25fdbbc-f8ea-4430-a0ac-46cc5fa00c69)
+
+
 
 ## Beispiel 1: 
 
