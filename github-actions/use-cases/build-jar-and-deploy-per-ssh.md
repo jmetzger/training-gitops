@@ -31,27 +31,14 @@ jobs:
       - name: Build JAR with Maven
         run: mvn clean package
 
-```
-
-## Advanced with ssh
-
-```
       - name: Copy JAR to Aya-GlassFish via SCP
         uses: appleboy/scp-action@v1
         with:
-          host: ${{ secrets.SCP_HOST }}
-          username: ${{ secrets.SCP_USER }}
+          host: 161.35.74.206
+          username: tln1
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "target/*.jar"
-          target: "/opt/aya-glassfish/glassfish/domains/domain1/autodeploy/"
+          target: "/home/tln1/"
 
-      - name: Restart Aya-GlassFish domain
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SCP_HOST }}
-          username: ${{ secrets.SCP_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            /opt/aya-glassfish/bin/asadmin restart-domain domain1
 ```
