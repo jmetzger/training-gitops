@@ -56,6 +56,9 @@
   1. github actions - Use Cases
      * [helm-chart aus repo in Kubernetes Cluster installieren](/github-actions/use-cases/deploy-helm-chart-2-kubernetes.md)
 
+  1. github actions - Schedule
+     * [schedule mit variablen verwenden](github-actions/examples/11-use-schedule-with-variables.md)
+
   1. github actions      
      * [Create dependant jobs](/github-actions/dependant-jobs.md)
      * [Create custom composite action](/github-actions/create-custom-action-composite.md)
