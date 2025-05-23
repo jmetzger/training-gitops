@@ -9,6 +9,8 @@
     * New repository secret
     * MY_SECRET_TOKEN
 
+![image](https://github.com/user-attachments/assets/17bd0dbd-4c70-45a8-ac98-6e09a3184cab)
+
 
 ## Step 1: Secrets anlegen 
 
