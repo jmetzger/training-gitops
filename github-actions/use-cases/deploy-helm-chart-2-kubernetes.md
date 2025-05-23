@@ -16,4 +16,9 @@ cat .kube/config | base64 > .kubeconfig.b64
 
 
 
+## Step 2: Workflow erstellen 
+
+  * Actions -> New Workflow -> Setup up a workflow yourself 
+
+![image](https://github.com/user-attachments/assets/884ebadd-70bf-42c9-b18f-f44b3d948e91)
 
