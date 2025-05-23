@@ -1,5 +1,10 @@
 # Use schedule with variables 
 
+## Remark 
+
+  * In the free version, this is not exact
+  * Scheduled jobs on private only if they are starred or in other plan 
+
 ## Exercise 
 
   * Anpassen auf die aktuelle Zeit (Fall 1 in 2 Minute, Falls in 4 minuten)
