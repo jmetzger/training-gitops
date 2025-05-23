@@ -63,7 +63,7 @@ jobs:
 # muss eindeutig sein 
       run: |
 
-        helm upgrade --install my-release ./chart/my-app --namespace default --create-namespace
+        helm upgrade --install my-release ./charts/my-app --namespace default --create-namespace
 
 
 
