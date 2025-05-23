@@ -14,9 +14,20 @@ cat .kube/config | base64 > .kubeconfig.b64
 
 ![image](https://github.com/user-attachments/assets/68e8aa22-ea52-4a6d-9379-7bd5b6d0a151)
 
+## Step 2: Secret erstellen 
+
+Settings -> Security -> Secrets & variables -> Actions -> New Repository Secret 
+
+```
+#
+KUBECONFIG
+
+# anlegen mit Inhalt von .kubeconfig.b64
 
 
-## Step 2: Workflow erstellen 
+```
+
+## Step 3: Workflow erstellen 
 
   * Actions -> New Workflow -> Setup up a workflow yourself 
 
