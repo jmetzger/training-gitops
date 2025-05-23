@@ -39,6 +39,7 @@ jobs:
       - name: Use secret
         run: |
           echo "Using secret..."
+          echo "${{secrets.MY_SECRET_TOKEN}}" 
           echo "Secret is set: [${{ secrets.MY_SECRET_TOKEN != '' }}]"
 
 ```
