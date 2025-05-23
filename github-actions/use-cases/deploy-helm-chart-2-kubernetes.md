@@ -22,3 +22,36 @@ cat .kube/config | base64 > .kubeconfig.b64
 
 ![image](https://github.com/user-attachments/assets/884ebadd-70bf-42c9-b18f-f44b3d948e91)
 
+
+```
+name: Deploy Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  helm-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Kubeconfig
+      run: |
+        echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+
+    - name: Install Helm
+      uses: azure/setup-helm@v3
+
+    - name: Deploy with Helm
+      run: |
+# bitte euren namespace eintragen anstelle von default , z.B. euren namen
+# muss eindeutig sein 
+        helm upgrade --install my-release ./chart --namespace default --create-namespace
+
+
+
+```
