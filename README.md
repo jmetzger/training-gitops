@@ -99,8 +99,10 @@
 
   1. Git - Server
      * [Git-Server auf Synology NAS installieren](/git-server/git-server-auf-synology.md)
-  1. github - actions - CODEOWNER
-     * [nur bestimmte Reviewer zählen zu den approval-Zählungen](github-actions/approval-by-codeowners.md)
+  
+  1. github - actions - reviewer eintragen
+     * [Feature github: nur bestimmte Reviewer zählen zu den approval-Zählungen](github-actions/approval-by-codeowners.md)
+     * [mit github actions reviewer eintragen](github-actions/auto-eintrag-reviewer-ueber-github-actions.md)
 
 ## Extras - github actions 
 
@@ -112,6 +114,7 @@
   1. Git - Best practices 
      * [Die 5 goldenenen Regeln - nix kaputtmachen so gehts](5-goldene-regeln.md) 
      * [Best practices](bp.md)
+
   1. Git - Advanced Commands
       * [git reflog](reflog.md)
     
