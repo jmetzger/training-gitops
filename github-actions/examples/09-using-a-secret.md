@@ -5,6 +5,10 @@
   * Wieder repo fürs training z.B.
   * https://github.com/gittrainereu2/gitops-jochen/new/master?filename=.github%2Fworkflows%2Fmain.yml&workflow_template=blank
 
+  * Settings -> Security -> Secrets and varialbles  -> Actions
+    * New repository secret
+    * MY_SECRET_TOKEN
+
 
 ## Step 1: Secrets anlegen 
 
