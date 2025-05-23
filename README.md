@@ -98,7 +98,9 @@
 ## Teilnehmerfragen 
 
   1. Git - Server
-     * [Git-Server auf Synology NAS installieren](/git-server/git-server-auf-synology.md) 
+     * [Git-Server auf Synology NAS installieren](/git-server/git-server-auf-synology.md)
+  1. github - actions - CODEOWNER
+     * [nur bestimmte Reviewer zählen zu den approval-Zählungen](github-actions/approval-by-codeowners.md)
 
 ## Extras - github actions 
 
