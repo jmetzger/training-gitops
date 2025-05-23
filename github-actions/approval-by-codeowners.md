@@ -12,7 +12,7 @@
 
 ![image](https://github.com/user-attachments/assets/6568f169-d2b0-44ba-8acb-33e16bb78727)
 
-  3. Dann müssen im Repo unter .git/CODEOWNERS diese noch eingetragen werden
+  3. Dann müssen im Repo unter .github/CODEOWNERS diese noch eingetragen werden
 
 ```
 # Datei: .github/CODEOWNERS
