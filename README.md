@@ -53,6 +53,9 @@
   1. github actions - Praxis II (Arbeiten mit Outputs)
      * [Outputs zwischen jobs](github-actions/examples/06-tag-auto-erstellung-und-setzen.md)
 
+  1. github actions - Use Cases
+     * [helm-chart aus repo in Kubernetes Cluster installieren](/github-actions/use-cases/deploy-helm-chart-2-kubernetes.md)
+
   1. github actions      
      * [Create dependant jobs](/github-actions/dependant-jobs.md)
      * [Create custom composite action](/github-actions/create-custom-action-composite.md)
