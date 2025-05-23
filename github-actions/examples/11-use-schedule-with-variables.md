@@ -1,12 +1,16 @@
 # Use schedule with variables 
 
+## Exercise 
+
+  * Anpassen auf die aktuelle Zeit (Fall 1 in 2 Minute, Falls in 4 minuten)
+
 ```
 name: Ein Job mit dynamischer Variable je nach Zeitplan
 
 on:
   schedule:
-    - cron: '0 8 * * 1'   # Montag 08:00 UTC
-    - cron: '0 20 * * 5'  # Freitag 20:00 UTC
+    - cron: '*/5 * * * *'   # alle 5 Minuten 
+    - cron: '* * * * *'  # jede Minute 
 
 jobs:
   dynamic-message:
@@ -16,10 +20,10 @@ jobs:
         id: set-message
         run: |
           case "${{ github.event.schedule }}" in
-            '0 8 * * 1')
+            '*/5 * * * *')
               echo "message=Guten Morgen am Montag!" >> $GITHUB_OUTPUT
               ;;
-            '0 20 * * 5')
+            '* * * * *')
               echo "message=Guten Abend am Freitag!" >> $GITHUB_OUTPUT
               ;;
             *)
