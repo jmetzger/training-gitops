@@ -56,7 +56,7 @@ jobs:
         echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
 
     - name: Install Helm
-      uses: azure/setup-helm@v3
+      uses: azure/setup-helm@v4
 
     - name: Deploy with Helm
 # bitte euren namespace eintragen anstelle von default , z.B. euren namen
