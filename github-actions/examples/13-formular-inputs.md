@@ -1,5 +1,7 @@
 # Formular verwendets (inputs)
 
+## Version 1: mit ifs 
+
 ```
 # .github/workflows/deployment.yml
 name: Deploy Application
@@ -36,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Display Input Values
         run: |
