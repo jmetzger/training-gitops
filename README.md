@@ -55,13 +55,37 @@
 
   1. github actions - Use Cases
      * [helm-chart aus repo in Kubernetes Cluster installieren](/github-actions/use-cases/deploy-helm-chart-2-kubernetes.md)
+     * [jar bauen und über scp an den Server übertragen](/github-actions/use-cases/build-jar-and-deploy-per-ssh.md)
 
   1. github actions - Schedule
      * [schedule mit variablen verwenden](/github-actions/examples/11-use-schedule-with-variables.md)
     
   1. github actions - Inputs (Formular) 
      * [Manueller Start Pipeline mit Formular (Inputs)](/github-actions/examples/13-formular-inputs.md)
+      
+## Teilnehmerfragen 
 
+  1. Git - Server
+     * [Git-Server auf Synology NAS installieren](/git-server/git-server-auf-synology.md)
+  
+  1. github - actions - reviewer eintragen
+     * [Feature github: nur bestimmte Reviewer zählen zu den approval-Zählungen](github-actions/approval-by-codeowners.md)
+     * [mit github actions reviewer eintragen](github-actions/auto-eintrag-reviewer-ueber-github-actions.md)
+
+## Extras - git 
+
+  1. Git - Best practices 
+     * [Die 5 goldenenen Regeln - nix kaputtmachen so gehts](5-goldene-regeln.md) 
+     * [Best practices](bp.md)
+
+  1. Git - Advanced Commands
+      * [git reflog](reflog.md)
+
+## Extras - github actions 
+
+  1. github - actions - runner 
+     * [Add a self-host runner](/github-actions/add-runner.md)
+  
   1. github actions      
      * [Create dependant jobs](/github-actions/dependant-jobs.md)
      * [Create custom composite action](/github-actions/create-custom-action-composite.md)
@@ -102,31 +126,8 @@
 
   1. Docker 
      * [Install docker on Ubuntu](/docker/install-ubuntu.md)
-     * [Important commands](/docker/wichtigste-befehle.md)  
-       
-## Teilnehmerfragen 
-
-  1. Git - Server
-     * [Git-Server auf Synology NAS installieren](/git-server/git-server-auf-synology.md)
+     * [Important commands](/docker/wichtigste-befehle.md) 
   
-  1. github - actions - reviewer eintragen
-     * [Feature github: nur bestimmte Reviewer zählen zu den approval-Zählungen](github-actions/approval-by-codeowners.md)
-     * [mit github actions reviewer eintragen](github-actions/auto-eintrag-reviewer-ueber-github-actions.md)
-
-## Extras - github actions 
-
-  1. github - actions - runner 
-     * [Add a self-host runner](/github-actions/add-runner.md)
-
-## Extras - git 
-
-  1. Git - Best practices 
-     * [Die 5 goldenenen Regeln - nix kaputtmachen so gehts](5-goldene-regeln.md) 
-     * [Best practices](bp.md)
-
-  1. Git - Advanced Commands
-      * [git reflog](reflog.md)
-    
 ## Backlog  
      
   1. Git - Installation (GIT) 
