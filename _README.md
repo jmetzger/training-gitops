@@ -2,14 +2,10 @@
 
 
 ## Agenda
-  1. Installation (GIT) 
-     * [GIT auf Ubuntu/Debian installieren](#git-auf-ubuntudebian-installieren)
-     * [GIT unter Windows installieren](https://git-scm.com/download/win)
-  
-  1. Kubernetes 
-     * [Installation micro8ks (Ubuntu)](#installation-micro8ks-ubuntu)
-  
-  1. Commands (with tipps & tricks) 
+  1. Git - Grundlagen
+     * [Grundlagen](https://schulung.t3isp.de/documents/pdfs/git/git-training.pdf)
+ 
+  1. Git - Commands (with tipps & tricks) 
      * [git add + Tipps & Tricks](#git-add-+-tipps--tricks)
      * [git commit](#git-commit)
      * [git log](#git-log)
@@ -21,21 +17,76 @@
      * [git merge](#git-merge)
      * [git tag](#git-tag)
      * [git rm](#git-rm)
-   
-  1. Advanced Commands 
-     * [git reflog](#git-reflog)
-     * [git reset - Back in Time](#git-reset---back-in-time)
-   
-  1. Docker 
-     * [Install docker on Ubuntu](#install-docker-on-ubuntu)
-     * [Important commands](#important-commands)
-   
-  1. github pages
-     * [Github Pages](#github-pages)
 
-  1. github actions 
+  1. Git - mergetool
+     * [mergetool auf der Kommandozeile verwenden](#mergetool-auf-der-kommandozeile-verwenden)
+      
+  1. Git - Advanced Commands 
+     * [git reset - Back in Time](#git-reset---back-in-time)
+
+  1. Git - Tipps & tricks 
+     * [Beautified log](#beautified-log)
+     * [Change already committed files and message](#change-already-committed-files-and-message)
+   
+  1. Git - Exercises 
+     * [merge feature/4712 - conflict](#merge-feature4712---conflict)
+
+  1. Git - Snippets 
+     * [publish lokal repo to server - bitbucket](#publish-lokal-repo-to-server---bitbucket)
+     * [failure-on-push-fix](#failure-on-push-fix)
+     * [failure-on-push-with-conflict](#failure-on-push-with-conflict)
+        
+  1. Git - Documentation 
+     * [GIT Pdf](http://schulung.t3isp.de/documents/pdfs/git/git-training.pdf)
+     * [GIT Book EN](https://git-scm.com/book/en/v2)
+     * [GIT Book DE](https://git-scm.com/book/de/v2)
+
+  1. github actions - Einführung
+     * [Was ist ci/cd ?](#was-ist-cicd-)
      * [General overview](#general-overview)
+
+  1. github actions - Praxis I
+     * [Übung 1: Den 1. Workflow erstellen](#übung-1-den-1-workflow-erstellen)
+     * [Übung 2: Das repo auschecken](#übung-2-das-repo-auschecken)
+     * [Übung 3: Workflow in Container ausführen](#übung-3-workflow-in-container-ausführen)
+
+  1. github actions - Praxis II (Arbeiten mit Outputs)
+     * [Outputs zwischen jobs](#outputs-zwischen-jobs)
+
+  1. github actions - Use Cases
+     * [helm-chart aus repo in Kubernetes Cluster installieren](#helm-chart-aus-repo-in-kubernetes-cluster-installieren)
+     * [jar bauen und über scp an den Server übertragen](#jar-bauen-und-über-scp-an-den-server-übertragen)
+
+  1. github actions - Schedule
+     * [schedule mit variablen verwenden](#schedule-mit-variablen-verwenden)
+    
+  1. github actions - Inputs (Formular) 
+     * [Manueller Start Pipeline mit Formular (Inputs)](#manueller-start-pipeline-mit-formular-inputs)
+      
+## Teilnehmerfragen 
+
+  1. Git - Server
+     * [Git-Server auf Synology NAS installieren](#git-server-auf-synology-nas-installieren)
+  
+  1. github - actions - reviewer eintragen
+     * [Feature github: nur bestimmte Reviewer zählen zu den approval-Zählungen](#feature-github-nur-bestimmte-reviewer-zählen-zu-den-approval-zählungen)
+     * [mit github actions reviewer eintragen](#mit-github-actions-reviewer-eintragen)
+
+## Extras - git 
+
+  1. Git - Best practices 
+     * [Die 5 goldenenen Regeln - nix kaputtmachen so gehts](#die-5-goldenenen-regeln---nix-kaputtmachen-so-gehts)
+     * [Best practices](#best-practices)
+
+  1. Git - Advanced Commands
+      * [git reflog](reflog.md)
+
+## Extras - github actions 
+
+  1. github - actions - runner 
      * [Add a self-host runner](#add-a-self-host-runner)
+  
+  1. github actions      
      * [Create dependant jobs](#create-dependant-jobs)
      * [Create custom composite action](#create-custom-composite-action)
      * [Create custom docker action](#create-custom-docker-action)
@@ -53,7 +104,6 @@
      
   1. github actions - examples 
      * [Simple Workflow Test](#simple-workflow-test)
-     * [Checkout Repo](#checkout-repo)
      * [Push to repo](#push-to-repo)
      * [Write secret to file and push to repo](#write-secret-to-file-and-push-to-repo)
     
@@ -63,10 +113,9 @@
      * [Deploy with ansbile using ssh](#deploy-with-ansbile-using-ssh)
 
   1. github - actions - docker
-     * [Was darf in das Dockerfile rein](https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-action)
-)
-
-  1. github - actions GITHUB_OUTRPUT - GITHUB_SUMMARY
+     * [Was darf in das Dockerfile rein](https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-actions)
+      
+  1. github - actions GITHUB_OUTPUT - GITHUB_SUMMARY
      * [Write to summary page from within jobs](#write-to-summary-page-from-within-jobs)
 
   1. github - actions - documentations
@@ -74,91 +123,42 @@
      * [github actions marketplace](https://github.com/marketplace?category=&query=&type=actions&verification=)
      * [default environment variables](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
      * [Documentation github actions](https://docs.github.com/en/actions)
-       
-  1. Nix kaputtmachen - so gehts
-     * [Die 5 goldenenen Regeln](#die-5-goldenenen-regeln)
 
-  1. Tips & tricks 
-     * [Beautified log](#beautified-log)
-     * [Change already committed files and message](#change-already-committed-files-and-message)
+  1. Docker 
+     * [Install docker on Ubuntu](#install-docker-on-ubuntu)
+     * [Important commands](#important-commands)
+  
+## Backlog  
+     
+  1. Git - Installation (GIT) 
+     * [GIT auf Ubuntu/Debian installieren](#git-auf-ubuntudebian-installieren)
+     * [GIT unter Windows installieren](https://git-scm.com/download/win)
+  
+  1. Git - Tipps & Tricks
      * [Best practice - Delete origin,tracking and local branch after pull request/merge request](#best-practice---delete-origintracking-and-local-branch-after-pull-requestmerge-request)
      * [Change language to german - Linux](#change-language-to-german---linux)
      * [Reference tree without sha-1](#reference-tree-without-sha-1)
      * [Always do pull --rebase for master branch](#always-do-pull---rebase-for-master-branch)
-  
-  1. Exercises 
-     * [merge feature/4712 - conflict](#merge-feature4712---conflict)
-     * [merge request with bitbucket](#merge-request-with-bitbucket)
-  
-  1. Snippets 
-     * [publish lokal repo to server - bitbucket](#publish-lokal-repo-to-server---bitbucket)
-     * [failure-on-push-fix](#failure-on-push-fix)
-     * [failure-on-push-with-conflict](#failure-on-push-with-conflict)
-     
-  1. Extras 
-     * [Best practices](#best-practices)
-     * [Using a mergetool to solve conflicts](#using-a-mergetool-to-solve-conflicts)
-  
-  1. Help
-     * [Help from commandline](#help-from-commandline)
+
+  1. Git - github pages
+     * [Github Pages](#github-pages)
     
-  1. Documentation 
-     * [GIT Pdf](http://schulung.t3isp.de/documents/pdfs/git/git-training.pdf)
-     * [GIT Book EN](https://git-scm.com/book/en/v2)
-     * [GIT Book DE](https://git-scm.com/book/de/v2)
+  1. Git - Documentation (Tools)
      * [Third Party Tools](#third-party-tools)
-     
-   
+
+  1. Kubernetes 
+     * [Installation micro8ks (Ubuntu)](#installation-micro8ks-ubuntu)
+    
 
 <div class="page-break"></div>
 
-## Installation (GIT) 
+## Git - Grundlagen
 
-### GIT auf Ubuntu/Debian installieren
+### Grundlagen
 
+  * https://schulung.t3isp.de/documents/pdfs/git/git-training.pdf
 
-### Installation 
-
-```
-sudo apt update 
-sudo apt install git 
-```
-
-### Language to english please !! 
-
-```
-sudo update-locale LANG=en_US.UTF-8
-su - kurs
-
-## back to german 
-
-sudo update-locale LANG=de_DE.UTF-8 
-su - kurs 
-
-## Reference:
-https://www.thomas-krenn.com/de/wiki/Locales_unter_Ubuntu_konfigurieren
-
-## update-locale does a change in
-$ cat /etc/default/locale 
-LANG=en_US.UTF-8
-
-```
-
-### GIT unter Windows installieren
-
-  * https://git-scm.com/download/win
-
-## Kubernetes 
-
-### Installation micro8ks (Ubuntu)
-
-
-### Reference: 
-
-  * https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#2-deploying-microk8s
-
-
-## Commands (with tipps & tricks) 
+## Git - Commands (with tipps & tricks) 
 
 ### git add + Tipps & Tricks
 
@@ -232,6 +232,12 @@ git config --global alias.sl '!git log --oneline -2 && git status'
 ### git config
 
 
+### List the result (last entry is being used) 
+
+```
+git config --list
+```
+
 ### How to delete an entry from config 
 
 ```
@@ -243,6 +249,7 @@ git config --global --list
 git config --unset --global alias.log
 ```
 
+![image](https://github.com/user-attachments/assets/8c3270d0-12a1-4e41-ba85-21a145a2914c)
 
 ### git show
 
@@ -382,6 +389,12 @@ git fetch --prune --prune-tags
 ### git rm
 
 
+### Delete file in working directory, staging and repo 
+
+```
+git rm filename.txt 
+```
+
 ### Deleting files only from repo (not locally) 
 
 ```
@@ -392,27 +405,57 @@ git commit -am "my filename.txt was deleted"
 
 ```
 
-## Advanced Commands 
+## Git - mergetool
 
-### git reflog
+### mergetool auf der Kommandozeile verwenden
 
 
-### command
+### Meld (Windows) 
 
-  * show everything you (last 30 days), also stuff that is not visible in branch anymore 
+  *  https://meldmerge.org/
 
-### Example 
-
-```
-git reflog 
-```
-
-### when many entries a pager like less (aka man less) will be used 
+### Find out if mergetool meld is available 
 
 ```
-## you can get out of the page with pressing the key 'q' 
+## Important: close and reopen git bash before doing that 
+## you can try to see, if meld can be executed by simply typing "meld"
+
+git mergetool --tool-help
+```
+
+### Configure, when it is found by mergetool --tool-help 
 
 ```
+## you have to be in a git project 
+git config --global merge.tool meld
+git config --global diff.tool meld
+git config --global mergetool.keepBackup false
+git config --list
+```
+
+### If not found bei mergetool --tool-help :: Configuration in Git for Windows (git bash) 
+
+```
+## you have to be in a git project 
+git config --global merge.tool meld
+git config --global diff.tool meld
+## Should be on Windows 10 
+git config --global mergetool.meld.path “/c/Users/Admin/AppData/Local/Programs/Meld/Meld.exe”
+## sometimes here 
+git config --global mergetool.meld.path "/c/Program Files (x86)/Meld/Meld.exe"
+
+## do not create an .orig - file before merge 
+git config --global mergetool.keepBackup false
+```  
+
+### How to use it 
+
+```
+## when you have conflict you can open the mergetool (graphical tool with )
+git mergetool
+```
+
+## Git - Advanced Commands 
 
 ### git reset - Back in Time
 
@@ -431,137 +474,985 @@ git reflog
 git reset --hard 2343 
 ```
 
-## Docker 
+## Git - Tipps & tricks 
 
-### Install docker on Ubuntu
+### Beautified log
 
 
 ### Walkthrough 
 
 ```
-sudo su -
-apt update && apt install -y apt-transport-https ca-certificates curl software-properties-common && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -;
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && apt-get update && apt-cache policy docker-ce && apt-get install -y docker-ce && systemctl status --no-pager docker
-```
-
-### Important commands
-
-
-### Volume 1
-
-```
-mkdir testdir
-cd testdir 
-## Dockerfile anlegen 
-docker build -t meincontainer .
-docker images 
-## interactive starten 
-## nach exit wird er beendet 
-docker run -it meincontainer
-## im container exit 
-docker ps -a 
-```
-
-### Volume 2
-
-```
-## image von docker hub download . hier ubuntu:latest
-docker pull ubuntu
-
-## Alle lokalen images anzeigen (auf dem Server vorhandene) 
-## z.B. die auf dem Serer mit docker build . erstellt wurden
-## ohne downgeloaded von docker hub 
-docker images
-
-## Neues docker container starten auf basis das ubuntu:latest images
-## Im Hintergrund (Daemonized) und an ein Terminal 
-docker run -dt ubuntu:latest
-
-## Alle laufenden docker-container anzeigen 
-docker ps 
-
-## Alle docker - container (auch beendete anzeigen)
-docker ps -a 
-
-## Alle laufenden Container anzeigen 
-docker exec -it e1a1d3 bash
-
-## Laufenden Docker container beendet und löschen 
-docker rm -f e21
-
-## docker images anzeigen 
-docker images
-
-## docker image lokal löschen 
-docker rmi ubuntu:latest
-
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset \
+-%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
 
 ```
 
-## github pages
+### PRETTY FORMATS
 
-### Github Pages
+  * all documented in git help log (section PRETTY FORMAT)
+  * https://git-scm.com/docs/git-log#_pretty_formats
+  
 
+### Change already committed files and message
 
-### Types of Pages
-
-  * Personal Page: http://jmetzger.github.io 
-  * Project Page http://
-
-### Personal Site 
 
 ```
-## Step 1: create personal repo 
-e.g. 
-https://github.com/gittrainereu/gittrainereu.github.io 
+## Walkthrough 
+touch newfile.txt 
+git add .
+git commit -am "new file added"
 
-git clone https://github.com/gittrainereu/gittrainereu.github.io
-cd gittrainereu.github.io
-echo "Hello World" > index.html
-git add -A
-git commit -m "Initial commit"
-git push -u origin master 
-
-https://gittrainereu.github.io 
-
+## Uups forgotten README 
+touch README 
+git add .
+git commit --amend # README will be in same commit as newfile.txt 
+## + you can also changed the commit message 
 ```
 
-### Project Page 
+## Git - Exercises 
 
-## github actions 
+### merge feature/4712 - conflict
+
+
+### Exercise 
+
+```
+1. You are in master-branch
+2. Checkout new branch feature/4712 
+3. Change line1 in todo.txt 
+4. git add -A; git commit -am "feature-4712 done"
+5. Change to master 
+6. Change line1 in todo.txt 
+7. git add -A; git commit -am "change line1 in todo.txt in master" 
+8. git merge feature/4712 
+```
+
+## Git - Snippets 
+
+### publish lokal repo to server - bitbucket
+
+ 
+ ```
+ # Step 1: Create repo on server without README and .gitignore /set both to NO when creating
+ 
+ # Step 2: on commandline locally
+ cd /path/to/repo
+ git remote add origin https://erding2017@bitbucket.org/erding2017/git-remote-jochen.git
+ git push -u origin master
+ 
+ # Step 3: for further commits 
+ echo "test" > testdatei
+ git add .
+ git commit -am "added testdatei"
+ git push
+ ```
+
+### failure-on-push-fix
+
+
+```
+## Step 1: push produces error 
+## you have done git push -u origin master the last to setup remote tracking branch by option -u 
+git push
+Password for 'https://erding2017@bitbucket.org':
+To https://bitbucket.org/erding2017/git-remote-jochen.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://erding2017@bitbucket.org/erding2017/git-remote-jochen.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+## Step 2: Integrate changes from online 
+git pull 
+## Step 2a: Editor opens and you need to save and ext (without changing anything)
+
+## Step 3: re-push 
+git push 
+```
+
+### failure-on-push-with-conflict
+
+
+## Failure push 
+
+```
+## Step 1: push produces error 
+## you have done git push -u origin master the last to setup remote tracking branch by option -u 
+git push
+Password for 'https://erding2017@bitbucket.org':
+To https://bitbucket.org/erding2017/git-remote-jochen.git
+ ! [rejected]        master -> master (fetch first)
+....
+## Step 2: Integrate changes from online 
+git pull
+
+## Step 3: Solve conflict 
+Auto-merging agenda.txt
+CONFLICT (content): Merge conflict in agenda.txt
+Automatic merge failed; fix conflicts and then commit the result.
+kurs@ubuntu-tr01:~/training$ git status
+On branch master
+Your branch and 'origin/master' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" to merge the remote branch into yours)
+
+## Step 3a: Open file agenda.txt
+## Decide for which version 
+## - remove all <<<<<< and ====== and >>>>>>>>>>  - lines 
+
+## Step 3b: then: save + exit from editor
+
+
+## Step 3c: mark resolution
+git status
+git add todo.txt 
+
+## Step 3d: 
+git status
+## as written there 
+git commit
+
+
+## Step 4: re-push 
+git push 
+```
+
+### recipe 
+
+```
+git push # failure 
+git pull 
+git add todo.txt 
+git commit 
+git push 
+```
+
+## Git - Documentation 
+
+### GIT Pdf
+
+  * http://schulung.t3isp.de/documents/pdfs/git/git-training.pdf
+
+### GIT Book EN
+
+  * https://git-scm.com/book/en/v2
+
+### GIT Book DE
+
+  * https://git-scm.com/book/de/v2
+
+## github actions - Einführung
+
+### Was ist ci/cd ?
+
+
+### Allgemein 
+
+**CI/CD** steht für **Continuous Integration** und **Continuous Delivery** bzw. **Continuous Deployment** – zwei zentrale Konzepte in der modernen Softwareentwicklung.
+
+---
+
+#### 🧪 **CI – Continuous Integration**
+
+> Automatisches Testen und Zusammenführen von Code-Änderungen.
+
+* Entwickler\:innen arbeiten gemeinsam am Code.
+* Sobald jemand etwas „pusht“, wird automatisch geprüft:
+
+  * Funktioniert der Code? (z. B. durch Unit Tests)
+  * Lässt sich das Projekt bauen (Build)?
+* Ziel: Fehler frühzeitig erkennen, weniger Integrationstress.
+
+---
+
+#### 🚀 **CD – Continuous Delivery / Deployment**
+
+##### 1. **Continuous Delivery**
+
+> Der Code ist jederzeit bereit für ein manuelles Deployment.
+
+* Nach erfolgreich bestandenem CI-Prozess wird der Code automatisch „bereitgestellt“, z. B. als Docker-Image.
+* Das Deployment erfolgt per Knopfdruck oder Approval.
+
+##### 2. **Continuous Deployment**
+
+> Noch ein Schritt weiter: Änderungen gehen automatisch live, sobald sie durch die Tests kommen.
+
+* Vollständige Automatisierung bis zum Produktionssystem.
+* Typisch für Microservices und Cloud-native Architekturen.
+
+---
+
+#### 📦 Beispiel in GitHub Actions
+
+Ein typischer CI/CD-Workflow:
+
+```yaml
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to production..."
+```
+
+---
+
 
 ### General overview
 
 
 ### Komponenten 
 
-  * actions 
   * workflows 
   * jobs
   * steps
-  * events 
-
-### Actions 
-
-  * What can we do ? 
-  * i.d.R läuft jede Action in einem docker-container (aber auch möglich: node-js (12), combined)
+  * events
+  * actions
 
 ### Workflows 
 
-  * ENV (Umgebungsvariablen, Variablen) 
-  * Jobs -> Steps 
-  * Events
+Mit einfachen Worten:
+
+> **Ein Workflow in GitHub Actions ist ein automatisierter Ablauf, der etwas für dich erledigt, sobald etwas in deinem GitHub-Projekt passiert.**
+
+Zum Beispiel:
+
+* Du machst einen Push → automatisch wird dein Code getestet.
+* Du öffnest einen Pull Request → dein Projekt wird gebaut und überprüft.
+* Du willst regelmäßig etwas tun → GitHub kann z. B. jeden Tag um 6 Uhr morgens etwas starten.
+
+Ein Workflow besteht aus:
+
+* **Trigger** (Was löst den Ablauf aus? z. B. `push`, `pull_request`, `schedule`)
+* **Jobs** (Was soll getan werden?)
+* **Steps** (Wie wird es gemacht? z. B. Befehle oder Actions)
+
+Ein einfaches Beispiel:
+
+```yaml
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm install
+      - run: npm test
+```
+
+➡️ Dieser Workflow testet automatisch deinen Code bei jedem `git push`.
 
 ### Events 
 
   * Events sind Ereignisse die stattfinden (man könnte auch sagen -> Trigger)
   * Ref: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
 
-#### Beispiele für Typen 
+#### Beispiele für Typen von Events  
 
   * pull_request
     * if no activity types are specified, the workflow runs when a pull request is opened or reopened or when the head branch of the pull request is updated
    
+### Actions 
+
+  * Bei einer **action** handelt es sich um eine benutzerdefinierte Anwendung für die GitHub Actions-Plattform zur Ausführung einer komplexen und häufig ausgeführten Aufgabe
+  * Wenn ich sie verwende, spare ich code 
+  * Beispiele von **actions** in github actions
+
+
+| Action                      | Zweck                                                                   |
+| --------------------------- | ----------------------------------------------------------------------- |
+| `actions/checkout`          | Checkt den Repository-Code aus, um damit arbeiten zu können             |
+| `actions/setup-node`        | Installiert Node.js in einer bestimmten Version                         |
+| `actions/setup-python`      | Installiert Python in einer bestimmten Version                          |
+| `actions/setup-java`        | Installiert Java / JDK                                                  |
+| `actions/cache`             | Caching von Abhängigkeiten (z. B. `node_modules`) für schnellere Builds |
+| `actions/upload-artifact`   | Speichert Build-Ergebnisse (z. B. Testberichte)                         |
+| `actions/download-artifact` | Lädt gespeicherte Artefakte in späteren Jobs                            |
+| `docker/build-push-action`  | Baut und pusht ein Docker-Image zu DockerHub oder GHCR                  |
+| `github/codeql-action/init` | Startet CodeQL-Analyse für Sicherheitsscans                             |
+| `actions/github-script`     | Führt beliebige JavaScript-Befehle mit Zugriff auf das GitHub-API aus   |
+
+  * Beispiele von von github actions aus der community
+
+| Action                                 | Zweck                                                     |
+| -------------------------------------- | --------------------------------------------------------- |
+| `peter-evans/create-pull-request`      | Erstellt automatisch PRs, z. B. für aktualisierte Konfigs |
+| `JamesIves/github-pages-deploy-action` | Deployment auf GitHub Pages                               |
+| `Azure/k8s-deploy`                     | Deployment zu Kubernetes (AKS etc.)                       |
+| `softprops/action-gh-release`          | Erstellt Releases inkl. Assets in GitHub                  |
+
+ 
+
+
+## github actions - Praxis I
+
+### Übung 1: Den 1. Workflow erstellen
+
+
+### Schritte: 
+
+  1. Im Menu auf actions klicken
+
+![image](https://github.com/user-attachments/assets/b03fad4d-0b34-4bdf-bb68-d013639a2d9f)
+
+  2. Unter simple workflow - auf **configure** klicken
+
+![image](https://github.com/user-attachments/assets/2b5bec65-9374-4d8b-84f7-ff30d9b17a97)
+
+  3. Es erscheint ein editor mit einem Beispiel-Workflow
+
+![image](https://github.com/user-attachments/assets/d939572a-5252-42d2-80c3-47864d61ca30)
+
+.. dann oben rechts auf **commit** klicken
+![image](https://github.com/user-attachments/assets/615d6b85-d50e-469a-a2ca-8cc79c3080a1)
+
+.. Im Popup nochmal auf commit changes unten rechts klicken 
+![image](https://github.com/user-attachments/assets/b52b824e-b71d-4dab-8d2a-f4d8472f66f5)
+
+  4. Menu -> Actions
+
+  * Wenn wir jetzt nochmal auf den Menüpunkt Actions klicken, sehen wir, dass der der Workflow bereits ausgeführt wird / wurde:
+
+![image](https://github.com/user-attachments/assets/6f4b4982-f7e3-47ab-a97b-92609367ee96)
+
+
+
+
+### Übung 2: Das repo auschecken
+
+
+```
+## This is a basic workflow to help you get started with Actions
+
+name: Jochen's erster Workflow 
+
+## Controls when the workflow will run
+on: push
+
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  jochen-checksout-and-runs-something:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+
+      - name: Checke repo aus
+        uses: actions/checkout@v4
+        
+      - run: |
+          ls -la
+          pwd
+          env
+      # Runs a single command using the runners shell
+      - run: echo Hello, world!
+```
+
+### Übung 3: Workflow in Container ausführen
+
+
+### Example 
+
+```
+## This is a basic workflow to help you get started with Actions
+
+name: CI
+
+## Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+## A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    container: node:18
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+          pwd
+          ls -la
+          env | grep GITHUB
+          id 
+          cat /etc/os-release 
+          ps aux 
+          # docker ps
+```
+
+### Reference 
+
+  * https://docs.github.com/en/actions/writing-workflows/choosing-where-your-workflow-runs/running-jobs-in-a-container
+
+## github actions - Praxis II (Arbeiten mit Outputs)
+
+### Outputs zwischen jobs
+
+
+### Vorbereitung 
+
+  * Der GITHUB_TOKEN wird von Github automatisch erstellt, aber du musst dafür Sorge tragen, dass die Schreibrechte auch im Workflow möglich sind
+
+🔍 Prüfe:
+
+Gehe zu Repository → Settings → Actions → General
+Scrolle zu "Workflow permissions"
+
+Wähle:
+✅ Read and write permissions
+
+![image](https://github.com/user-attachments/assets/b25fdbbc-f8ea-4430-a0ac-46cc5fa00c69)
+
+
+
+### Beispiel 1: 
+
+```
+name: Automatischer Tag
+
+on: [push]
+
+jobs:
+  version-erzeugen:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.create_version.outputs.version }}
+    steps:
+      - name: Erzeuge Versionsnummer
+        id: create_version
+        run: |
+          VERSION="v$(date +'%Y.%m.%d-%H%M')"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  tag-setzen:
+    needs: version-erzeugen
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checke Repo aus
+        uses: actions/checkout@v4
+
+      - name: Setze Git-Tag und pushe
+        env:
+          TAG_NAME: ${{ needs.version-erzeugen.outputs.version }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag "$TAG_NAME"
+          git push origin "$TAG_NAME"
+```
+
+## github actions - Use Cases
+
+### helm-chart aus repo in Kubernetes Cluster installieren
+
+
+### Prerequisites 
+
+```
+.kubeconfig als base64
+cat .kube/config | base64 > .kubeconfig.b64
+```
+
+### Step 1: Klonen eines Beispiels 
+
+   * Erstellen eines Repo aber über import mit folgender URL 
+     * https://gitlab.com/jmetzger/training-helm-chart-kubernetes-gitlab-ci-cd.git
+
+![image](https://github.com/user-attachments/assets/68e8aa22-ea52-4a6d-9379-7bd5b6d0a151)
+
+### Step 2: Secret erstellen 
+
+Settings -> Security -> Secrets & variables -> Actions -> New Repository Secret 
+
+```
+##
+KUBECONFIG
+
+## anlegen mit Inhalt von .kubeconfig.b64
+
+
+```
+
+### Step 3: Workflow erstellen 
+
+  * Actions -> New Workflow -> Setup up a workflow yourself 
+
+![image](https://github.com/user-attachments/assets/884ebadd-70bf-42c9-b18f-f44b3d948e91)
+
+
+```
+name: Deploy Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  helm-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Kubeconfig
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+
+    - name: Install Helm
+      uses: azure/setup-helm@v4
+
+    - name: Deploy with Helm
+## bitte euren namespace eintragen anstelle von default , z.B. euren namen
+## muss eindeutig sein 
+      run: |
+
+        helm upgrade --install my-release ./charts/my-app --namespace default --create-namespace
+        kubectl -n default get all
+
+
+
+
+```
+
+### jar bauen und über scp an den Server übertragen
+
+
+### Step 1: Neues Repo in gittrainereu / gittrainereu2 durch import  
+
+  * https://github.com/yhayashi30/maven-jar-sample.git
+
+### Step 2: Workflow erstellen 
+
+```
+name: Build and Deploy Aya GlassFish Jar
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build JAR with Maven
+        run: mvn clean package
+
+      - name: Copy JAR to Aya-GlassFish via SCP
+        uses: appleboy/scp-action@v1
+        with:
+          host: 161.35.74.206
+          username: tln1
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "target/*.jar"
+          target: "/home/tln1/"
+
+```
+
+## github actions - Schedule
+
+### schedule mit variablen verwenden
+
+
+### Remark 
+
+  * In the free version, this is not exact
+  * Scheduled jobs on private only if they are starred or in other plan 
+
+### Exercise 
+
+  * Anpassen auf die aktuelle Zeit (Fall 1 in 2 Minute, Falls in 4 minuten)
+
+```
+name: Ein Job mit dynamischer Variable je nach Zeitplan
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'   # alle 5 Minuten 
+    - cron: '* * * * *'  # jede Minute 
+
+jobs:
+  dynamic-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setze MESSAGE je nach Zeitplan
+        id: set-message
+        run: |
+          case "${{ github.event.schedule }}" in
+            '*/5 * * * *')
+              echo "message=Guten Morgen am Montag!" >> $GITHUB_OUTPUT
+              ;;
+            '* * * * *')
+              echo "message=Guten Abend am Freitag!" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "message=Unbekannter Zeitplan" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
+      - name: Ausgabe der Nachricht
+        run: echo "${{ steps.set-message.outputs.message }}"
+
+```
+
+## github actions - Inputs (Formular) 
+
+### Manueller Start Pipeline mit Formular (Inputs)
+
+
+### Version 1: mit ifs 
+
+```
+## .github/workflows/deployment.yml
+name: Deploy Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+      version:
+        description: 'Version/tag to deploy (e.g., v1.2.3)'
+        required: true
+        default: 'v1.0.0'
+      deploy_notes:
+        description: 'Optional deployment notes'
+        required: false
+      dry_run:
+        description: 'Run in dry-run mode'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  deploy:
+    name: Deploy to ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Display Input Values
+        run: |
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Version: ${{ github.event.inputs.version }}"
+          echo "Deploy Notes: ${{ github.event.inputs.deploy_notes }}"
+          echo "Dry Run: ${{ github.event.inputs.dry_run }}"
+
+      - name: Run Deployment Script
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            echo "Performing dry-run deployment to ${{ github.event.inputs.environment }}..."
+            # simulate deployment here
+          else
+            echo "Deploying version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}..."
+            # real deployment commands go here
+          fi
+```
+
+### Version 2 mit Case
+
+```
+## .github/workflows/deployment.yml
+name: Deploy Application
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+      version:
+        description: 'Version/tag to deploy (e.g., v1.2.3)'
+        required: true
+        default: 'v1.0.0'
+      deploy_notes:
+        description: 'Optional deployment notes'
+        required: false
+      dry_run:
+        description: 'Run in dry-run mode'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  deploy:
+    name: Deploy to ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Deployment Variables
+        id: set-vars
+        run: |
+          case "${{ github.event.inputs.environment }}" in
+            development)
+              echo "DEPLOY_URL=https://dev.example.com" >> $GITHUB_ENV
+              echo "CONFIG_PATH=./configs/dev.json" >> $GITHUB_ENV
+              ;;
+            staging)
+              echo "DEPLOY_URL=https://staging.example.com" >> $GITHUB_ENV
+              echo "CONFIG_PATH=./configs/staging.json" >> $GITHUB_ENV
+              ;;
+            production)
+              echo "DEPLOY_URL=https://example.com" >> $GITHUB_ENV
+              echo "CONFIG_PATH=./configs/prod.json" >> $GITHUB_ENV
+              ;;
+          esac
+
+      - name: Display Input Values
+        run: |
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Version: ${{ github.event.inputs.version }}"
+          echo "Deploy Notes: ${{ github.event.inputs.deploy_notes }}"
+          echo "Dry Run: ${{ github.event.inputs.dry_run }}"
+          echo "DEPLOY_URL: $DEPLOY_URL"
+          echo "CONFIG_PATH: $CONFIG_PATH"
+
+      - name: Run Deployment Script
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            echo "Dry-run deploying to $DEPLOY_URL using $CONFIG_PATH"
+          else
+            echo "Deploying version ${{ github.event.inputs.version }} to $DEPLOY_URL using config $CONFIG_PATH"
+            # Actual deployment logic here
+          fi
+
+
+
+```
+
+## Git - Server
+
+### Git-Server auf Synology NAS installieren
+
+
+
+ * Um auf einem **Synology NAS** einen Git-Server einzurichten, kannst du dies entweder über den **Paketmanager** mit vorhandenen Tools oder manuell über SSH und `git init --bare` tun. Hier ist eine **Schritt-für-Schritt-Anleitung** für beide Methoden:
+
+---
+
+### 🔧 **Variante 1: Mit dem Paket "Git Server" (einfachste Methode)**
+
+#### Voraussetzungen:
+
+* DSM (DiskStation Manager) installiert
+* Administratorrechte
+* SSH-Zugriff (optional für erweiterte Nutzung)
+
+#### Schritte:
+
+1. **Git Server installieren**
+
+   * Öffne das **Paket-Zentrum** auf deinem Synology NAS.
+   * Suche nach **„Git Server“** (von Synology).
+   * Klicke auf **Installieren**.
+
+2. **Benutzerrechte für Git einrichten**
+
+   * Gehe zu **Systemsteuerung > Benutzer > Benutzer bearbeiten**.
+   * Aktiviere bei gewünschten Benutzern unter dem Tab **Anwendungen** die **Git Server**-Berechtigung.
+   * (Optional: SSH-Zugriff erlauben unter „Terminal & SNMP“)
+
+3. **SSH aktivieren (für Push-Zugriff nötig)**
+
+   * Öffne **Systemsteuerung > Terminal & SNMP**.
+   * Aktiviere **SSH-Dienst aktivieren**.
+
+4. **Repository erstellen**
+
+   * Verbinde dich per SSH mit dem NAS:
+
+     ```bash
+     ssh benutzername@dein-nas-ip
+     ```
+   * Erstelle ein „bare“-Repository:
+
+     ```bash
+     mkdir -p /volume1/git/projektname.git
+     cd /volume1/git/projektname.git
+     git init --bare
+     ```
+
+5. **Repository vom Client klonen**
+
+   ```bash
+   git clone ssh://benutzername@dein-nas-ip/volume1/git/projektname.git
+   ```
+
+---
+
+### Referenz:
+
+  * https://kb.synology.com/de-de/DSM/help/Git/git?version=7
+
+## github - actions - reviewer eintragen
+
+### Feature github: nur bestimmte Reviewer zählen zu den approval-Zählungen
+
+
+### Situation 
+
+  * Nur bestimmte Personen sollen als Approval zählen
+  * Achtung: Approven können alle, die mindestens Leserechte für das Repo haben, sie zählen dann aber nicht mit
+
+### 3 Bausteine 
+
+  1. Team in der Organisation anlegen mit den gewünschten Benutzer: z.B. team_reviewer
+  2. 2 Haken bei branch-protection - rule setzen
+
+![image](https://github.com/user-attachments/assets/6568f169-d2b0-44ba-8acb-33e16bb78727)
+
+  3. Dann müssen im Repo unter .github/CODEOWNERS diese noch eingetragen werden
+
+```
+## Datei: .github/CODEOWNERS
+
+## Alle Dateien im Projekt sollen von einem Team geprüft werden
+* @gitmeisterei/team-reviewer
+```
+
+
+### mit github actions reviewer eintragen
+
+
+
+```
+.github/workflows/auto-reviewer-eintragen.yml
+```
+
+```
+name: "Reviewer mit gh CLI hinzufügen"
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write  # Notwendig für gh CLI
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: GitHub CLI installieren
+        uses: cli/cli-action@v2
+
+      - name: Reviewer hinzufügen
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatischer Token
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} \
+            --repo ${{ github.repository }} \
+            --add-reviewer user1 \
+            --add-reviewer user2
+```
+
+## Git - Best practices 
+
+### Die 5 goldenenen Regeln - nix kaputtmachen so gehts
+
+
+```
+1. Kein git commit --amend auf bereits veröffentlicht (gepushed) commit.
+
+2. Kein git reset vor bereits veröffentlichte (gepushed/gepushten) commits 
+(1234 (HEAD -letzter Commit) < 5412 (vö - HEAD~1 - vorletzte Commit ) -> kein reset auf 1234) 
+
+3. Mach niemals ein git push --force (JM sagt) 
+
+4. Kein Rebase auf bereits veröffentlichte commits (nach vö von Feature branchen) 
+- ausser Feature-Branch kann online gelöscht und nochmal erstellt werden 
+
+```
+
+### Best practices
+
+
+  * Delete branches, not needed anymore 
+  * git merge --no-ff -> for merging local branches (to get a good history from local)
+  * from online: git pull --rebase // clean history from online, not to many branches 
+  * nur auf einem Arbeiten mit max. 2 Teilnehmern, wenn mehr feature-branch 
+  
+## Teil 2:
+
+  * Be careful with git commands that change history.
+    * never change commits, that have already been pushed 
+  * Choose workflow wisely 
+  * Avoid git push -f in any case // should not be possible 
+  * Disable possibility to push -f for branch or event repo 
+  
+
+## Git - Advanced Commands
+
+## github - actions - runner 
 
 ### Add a self-host runner
 
@@ -638,6 +1529,8 @@ journalctl -u actions.runner.gittrainereu-runnertest.gh-runner1
 
   * https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners
 
+
+## github actions      
 
 ### Create dependant jobs
 
@@ -1242,38 +2135,6 @@ jobs:
       - run: echo Hello, world!
 ```
 
-### Checkout Repo
-
-
-```
-## This is a basic workflow to help you get started with Actions
-
-name: Jochen's erster Workflow 
-
-## Controls when the workflow will run
-on: push
-
-## A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  jochen-checksout-and-runs-something:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-
-      - name: Checke repo aus
-        uses: actions/checkout@v2
-        
-      - run: |
-          ls -la
-          pwd
-          env
-      # Runs a single command using the runners shell
-      - run: echo Hello, world!
-```
-
 ### Push to repo
 
 
@@ -1573,9 +2434,9 @@ jobs:
 
 ### Was darf in das Dockerfile rein
 
-  * https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-action
+  * https://docs.github.com/de/actions/creating-actions/dockerfile-support-for-github-actions
 
-## github - actions GITHUB_OUTRPUT - GITHUB_SUMMARY
+## github - actions GITHUB_OUTPUT - GITHUB_SUMMARY
 
 ### Write to summary page from within jobs
 
@@ -1638,58 +2499,110 @@ jobs:
 
   * https://docs.github.com/en/actions
 
-## Nix kaputtmachen - so gehts
+## Docker 
 
-### Die 5 goldenenen Regeln
-
-
-```
-1. Kein git commit --amend auf bereits veröffentlicht (gepushed) commit.
-
-2. Kein git reset vor bereits veröffentlichte (gepushed/gepushten) commits 
-(1234 (HEAD -letzter Commit) < 5412 (vö - HEAD~1 - vorletzte Commit ) -> kein reset auf 1234) 
-
-3. Mach niemals ein git push --force (JM sagt) 
-
-4. Kein Rebase auf bereits veröffentlichte commits (nach vö von Feature branchen) 
-- ausser Feature-Branch kann online gelöscht und nochmal erstellt werden 
-
-```
-
-## Tips & tricks 
-
-### Beautified log
+### Install docker on Ubuntu
 
 
 ### Walkthrough 
 
 ```
-git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset \
--%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'"
+sudo su -
+apt update && apt install -y apt-transport-https ca-certificates curl software-properties-common && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -;
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && apt-get update && apt-cache policy docker-ce && apt-get install -y docker-ce && systemctl status --no-pager docker
+```
+
+### Important commands
+
+
+### Volume 1
+
+```
+mkdir testdir
+cd testdir 
+## Dockerfile anlegen 
+docker build -t meincontainer .
+docker images 
+## interactive starten 
+## nach exit wird er beendet 
+docker run -it meincontainer
+## im container exit 
+docker ps -a 
+```
+
+### Volume 2
+
+```
+## image von docker hub download . hier ubuntu:latest
+docker pull ubuntu
+
+## Alle lokalen images anzeigen (auf dem Server vorhandene) 
+## z.B. die auf dem Serer mit docker build . erstellt wurden
+## ohne downgeloaded von docker hub 
+docker images
+
+## Neues docker container starten auf basis das ubuntu:latest images
+## Im Hintergrund (Daemonized) und an ein Terminal 
+docker run -dt ubuntu:latest
+
+## Alle laufenden docker-container anzeigen 
+docker ps 
+
+## Alle docker - container (auch beendete anzeigen)
+docker ps -a 
+
+## Alle laufenden Container anzeigen 
+docker exec -it e1a1d3 bash
+
+## Laufenden Docker container beendet und löschen 
+docker rm -f e21
+
+## docker images anzeigen 
+docker images
+
+## docker image lokal löschen 
+docker rmi ubuntu:latest
+
 
 ```
 
-### PRETTY FORMATS
+## Git - Installation (GIT) 
 
-  * all documented in git help log (section PRETTY FORMAT)
-  * https://git-scm.com/docs/git-log#_pretty_formats
-  
+### GIT auf Ubuntu/Debian installieren
 
-### Change already committed files and message
 
+### Installation 
 
 ```
-## Walkthrough 
-touch newfile.txt 
-git add .
-git commit -am "new file added"
-
-## Uups forgotten README 
-touch README 
-git add .
-git commit --amend # README will be in same commit as newfile.txt 
-## + you can also changed the commit message 
+sudo apt update 
+sudo apt install git 
 ```
+
+### Language to english please !! 
+
+```
+sudo update-locale LANG=en_US.UTF-8
+su - kurs
+
+## back to german 
+
+sudo update-locale LANG=de_DE.UTF-8 
+su - kurs 
+
+## Reference:
+https://www.thomas-krenn.com/de/wiki/Locales_unter_Ubuntu_konfigurieren
+
+## update-locale does a change in
+$ cat /etc/default/locale 
+LANG=en_US.UTF-8
+
+```
+
+### GIT unter Windows installieren
+
+  * https://git-scm.com/download/win
+
+## Git - Tipps & Tricks
 
 ### Best practice - Delete origin,tracking and local branch after pull request/merge request
 
@@ -1742,257 +2655,37 @@ LANG=en_US.UTF-8
 git config --global branch.master.rebase true
 ```
 
-## Exercises 
+## Git - github pages
 
-### merge feature/4712 - conflict
+### Github Pages
 
 
-### Exercise 
+### Types of Pages
 
-```
-1. You are in master-branch
-2. Checkout new branch feature/4712 
-3. Change line1 in todo.txt 
-4. git add -A; git commit -am "feature-4712 done"
-5. Change to master 
-6. Change line1 in todo.txt 
-7. git add -A; git commit -am "change line1 in todo.txt in master" 
-8. git merge feature/4712 
-```
+  * Personal Page: http://jmetzger.github.io 
+  * Project Page http://
 
-### merge request with bitbucket
-
-  
-```  
-## Local 
-git checkout -b feature/4822
-ls -la
-touch f1.txt
-git add .
-git commit -am "f1.txt"
-touch f2.txt
-git add .
-git commit -am "f2.txt"
-git push origin feature/4822
-```
- 
-### Online bitbucket
- 
-```
-## create merge request 
-## and merge 
-```
-
-### Delete branch online after merge 
-
-### Cleanup locally 
+### Personal Site 
 
 ```
-git fetch --prune
-git checkout master
-git branch -D feature/4822
-git pull --rebase
-```
+## Step 1: create personal repo 
+e.g. 
+https://github.com/gittrainereu/gittrainereu.github.io 
 
+git clone https://github.com/gittrainereu/gittrainereu.github.io
+cd gittrainereu.github.io
+echo "Hello World" > index.html
+git add -A
+git commit -m "Initial commit"
+git push -u origin master 
 
-## Snippets 
-
-### publish lokal repo to server - bitbucket
-
- 
- ```
- # Step 1: Create repo on server without README and .gitignore /set both to NO when creating
- 
- # Step 2: on commandline locally
- cd /path/to/repo
- git remote add origin https://erding2017@bitbucket.org/erding2017/git-remote-jochen.git
- git push -u origin master
- 
- # Step 3: for further commits 
- echo "test" > testdatei
- git add .
- git commit -am "added testdatei"
- git push
- ```
-
-### failure-on-push-fix
-
-
-```
-## Step 1: push produces error 
-## you have done git push -u origin master the last to setup remote tracking branch by option -u 
-git push
-Password for 'https://erding2017@bitbucket.org':
-To https://bitbucket.org/erding2017/git-remote-jochen.git
- ! [rejected]        master -> master (fetch first)
-error: failed to push some refs to 'https://erding2017@bitbucket.org/erding2017/git-remote-jochen.git'
-hint: Updates were rejected because the remote contains work that you do
-hint: not have locally. This is usually caused by another repository pushing
-hint: to the same ref. You may want to first integrate the remote changes
-hint: (e.g., 'git pull ...') before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-## Step 2: Integrate changes from online 
-git pull 
-## Step 2a: Editor opens and you need to save and ext (without changing anything)
-
-## Step 3: re-push 
-git push 
-```
-
-### failure-on-push-with-conflict
-
-
-## Failure push 
-
-```
-## Step 1: push produces error 
-## you have done git push -u origin master the last to setup remote tracking branch by option -u 
-git push
-Password for 'https://erding2017@bitbucket.org':
-To https://bitbucket.org/erding2017/git-remote-jochen.git
- ! [rejected]        master -> master (fetch first)
-....
-## Step 2: Integrate changes from online 
-git pull
-
-## Step 3: Solve conflict 
-Auto-merging agenda.txt
-CONFLICT (content): Merge conflict in agenda.txt
-Automatic merge failed; fix conflicts and then commit the result.
-kurs@ubuntu-tr01:~/training$ git status
-On branch master
-Your branch and 'origin/master' have diverged,
-and have 1 and 1 different commits each, respectively.
-  (use "git pull" to merge the remote branch into yours)
-
-## Step 3a: Open file agenda.txt
-## Decide for which version 
-## - remove all <<<<<< and ====== and >>>>>>>>>>  - lines 
-
-## Step 3b: then: save + exit from editor
-
-
-## Step 3c: mark resolution
-git status
-git add todo.txt 
-
-## Step 3d: 
-git status
-## as written there 
-git commit
-
-
-## Step 4: re-push 
-git push 
-```
-
-### recipe 
-
-```
-git push # failure 
-git pull 
-git add todo.txt 
-git commit 
-git push 
-```
-
-## Extras 
-
-### Best practices
-
-
-  * Delete branches, not needed anymore 
-  * git merge --no-ff -> for merging local branches (to get a good history from local)
-  * from online: git pull --rebase // clean history from online, not to many branches 
-  * nur auf einem Arbeiten mit max. 2 Teilnehmern, wenn mehr feature-branch 
-  
-## Teil 2:
-
-  * Be careful with git commands that change history.
-    * never change commits, that have already been pushed 
-  * Choose workflow wisely 
-  * Avoid git push -f in any case // should not be possible 
-  * Disable possibility to push -f for branch or event repo 
-  
-
-### Using a mergetool to solve conflicts
-
-
-### Meld (Windows) 
-
-  *  https://meldmerge.org/
-
-### Find out if mergetool meld is available 
-
-```
-## Important: close and reopen git bash before doing that 
-## you can try to see, if meld can be executed by simply typing "meld"
-
-git mergetool --tool-help
-```
-
-### Configure, when it is found by mergetool --tool-help 
-
-```
-## you have to be in a git project 
-git config --global merge.tool meld
-git config --global diff.tool meld
-git config --global mergetool.keepBackup false
-git config --list
-```
-
-### If not found bei mergetool --tool-help :: Configuration in Git for Windows (git bash) 
-
-```
-## you have to be in a git project 
-git config --global merge.tool meld
-git config --global diff.tool meld
-## Should be on Windows 10 
-git config --global mergetool.meld.path “/c/Users/Admin/AppData/Local/Programs/Meld/Meld.exe”
-## sometimes here 
-git config --global mergetool.meld.path "/c/Program Files (x86)/Meld/Meld.exe"
-
-## do not create an .orig - file before merge 
-git config --global mergetool.keepBackup false
-```  
-
-### How to use it 
-
-```
-## when you have conflict you can open the mergetool (graphical tool with )
-git mergetool
-```
-
-## Help
-
-### Help from commandline
-
-
-### On Windows 
-
-```
-## on git bash enter
-git help <command>
-## e.g.
-git help log 
-
-## --> a webpage will open with content 
+https://gittrainereu.github.io 
 
 ```
 
-## Documentation 
+### Project Page 
 
-### GIT Pdf
-
-  * http://schulung.t3isp.de/documents/pdfs/git/git-training.pdf
-
-### GIT Book EN
-
-  * https://git-scm.com/book/en/v2
-
-### GIT Book DE
-
-  * https://git-scm.com/book/de/v2
+## Git - Documentation (Tools)
 
 ### Third Party Tools
 
@@ -2012,3 +2705,13 @@ git help log
 * Github Action
 * Git Webhooks 
 ```
+
+## Kubernetes 
+
+### Installation micro8ks (Ubuntu)
+
+
+### Reference: 
+
+  * https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#2-deploying-microk8s
+
