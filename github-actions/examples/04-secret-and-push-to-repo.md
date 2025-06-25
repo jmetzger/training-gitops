@@ -1,5 +1,12 @@
 # Secret and push to repo 
 
+## Vorbereitung 
+
+  * SECRET_SUPER_SECRET setzten über GUI 
+
+
+## Workflow 
+
 ```
 name: secret and push 
 
