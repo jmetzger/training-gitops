@@ -1,6 +1,6 @@
 # Formular verwendets (inputs)
 
-## Version 1: mit ifs 
+## Version 1: mit if-Abfragen
 
 ```
 # .github/workflows/deployment.yml
