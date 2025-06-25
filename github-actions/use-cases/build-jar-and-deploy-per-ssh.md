@@ -73,7 +73,7 @@ name: Build and Deploy Aya GlassFish Jar
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
@@ -95,7 +95,8 @@ jobs:
       - name: Copy JAR to Aya-GlassFish via SCP
         uses: appleboy/scp-action@v1
         with:
-          host: 161.35.74.206
+          host: 164.92.167.148
+# ändern 
           username: tln1
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
