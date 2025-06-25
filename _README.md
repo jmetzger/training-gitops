@@ -43,6 +43,7 @@
 
   1. github actions - Einführung
      * [Was ist ci/cd ?](#was-ist-cicd-)
+     * [Was kann github ci/cd](#was-kann-github-cicd)
      * [General overview](#general-overview)
 
   1. github actions - Praxis I
@@ -50,8 +51,16 @@
      * [Übung 2: Das repo auschecken](#übung-2-das-repo-auschecken)
      * [Übung 3: Workflow in Container ausführen](#übung-3-workflow-in-container-ausführen)
 
-  1. github actions - Praxis II (Arbeiten mit Outputs)
+  1. github actions - Praxis II (Arbeiten mit Outputs / GITHUB_STEP_SUMMARY)
      * [Outputs zwischen jobs](#outputs-zwischen-jobs)
+     * [Zusammenfassung ausgeben](#zusammenfassung-ausgeben)
+
+  1. github actions - Praxis III (Tests)
+     * [Tests über python script durchführen](#tests-über-python-script-durchführen)
+
+  1. github actions - needs (Abhängige Abläufe)
+     * [Arbeiten mit needs und if always()](#arbeiten-mit-needs-und-if-always)
+   
 
   1. github actions - Use Cases
      * [helm-chart aus repo in Kubernetes Cluster installieren](#helm-chart-aus-repo-in-kubernetes-cluster-installieren)
@@ -71,6 +80,11 @@
   1. github - actions - reviewer eintragen
      * [Feature github: nur bestimmte Reviewer zählen zu den approval-Zählungen](#feature-github-nur-bestimmte-reviewer-zählen-zu-den-approval-zählungen)
      * [mit github actions reviewer eintragen](#mit-github-actions-reviewer-eintragen)
+
+## Extras - yopad 
+
+ 1. [yopad - Aufzeichnungen](yopad/20250623.md)
+
 
 ## Extras - git 
 
@@ -708,6 +722,63 @@ jobs:
 ---
 
 
+### Was kann github ci/cd
+
+
+GitHub Actions ist eine sehr leistungsfähige CI/CD- und Automatisierungsplattform direkt in GitHub integriert. Du kannst damit so ziemlich alles automatisieren, was mit deinem Code zu tun hat. Hier sind die wichtigsten **Features** und **Möglichkeiten**:
+
+---
+
+#### 🚀 **Kern-Features von GitHub Actions**
+
+| Feature                                     | Beschreibung                                                                                          |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Workflows**                               | YAML-basierte Automatisierungen, die auf Events wie `push`, `pull_request` oder `schedule` reagieren. |
+| **Jobs & Steps**                            | Workflows bestehen aus Jobs (z. B. "build", "deploy"), die wiederum aus Steps bestehen.               |
+| **Self-hosted & GitHub-hosted Runner**      | Du kannst eigene Runner verwenden oder die von GitHub bereitgestellten virtuellen Maschinen.          |
+| **Matrix Builds**                           | Erlaubt dir, Tests parallel mit verschiedenen Parametern laufen zu lassen (z. B. Node-Versionen, OS). |
+| **Secrets & Umgebungsvariablen**            | Verwaltung sensibler Daten wie API-Keys sicher innerhalb von Repos/Organisationen.                    |
+| **Artifact Handling**                       | Build-Artefakte speichern, herunterladen oder zwischen Jobs teilen.                                   |
+| **Caching**                                 | Caching von z. B. `npm install` oder `pip`-Dependencies zur Beschleunigung von Builds.                |
+| **Reusable Workflows**                      | Wiederverwendbare Workflows via `workflow_call`.                                                      |
+| **Manueller Trigger (`workflow_dispatch`)** | Starte Workflows manuell – auch mit Formularfeldern (Inputs).                                         |
+| **Scheduled Workflows (`schedule`)**        | Cron-basierte Zeitsteuerung.                                                                          |
+| **Docker Support**                          | Docker-Container können direkt gebaut, gepusht und genutzt werden.                                    |
+| **Matrix Builds**                           | Automatische Variation von Builds durch definierte Matrix-Werte.                                      |
+| **Integration mit GitHub APIs**             | Durch `gh` CLI oder REST/GraphQL APIs.                                                                |
+| **Marketplace Actions**                     | Tausende vorgefertigte Actions im [GitHub Marketplace](https://github.com/marketplace?type=actions).  |
+
+---
+
+#### 💡 **Typische Anwendungsfälle / Möglichkeiten**
+
+| Bereich                      | Beispiele                                                                     |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| **Build & Test**             | Automatisches Bauen und Testen von Code bei jedem Push/PR.                    |
+| **Deployments**              | Automatisierte Deployments zu Cloud-Anbietern (AWS, Azure, GCP, Vercel etc.). |
+| **Release-Automatisierung**  | Tags erstellen, Releases publishen, Changelogs generieren.                    |
+| **Code-Qualität**            | Linting, Formatierung, statische Codeanalyse, Security-Scans.                 |
+| **CI/CD**                    | Komplette CI/CD-Pipelines für Webservices, Microservices etc.                 |
+| **Issue- und PR-Automation** | Automatisches Labeln, Kommentieren, Zuweisen.                                 |
+| **Cron-Jobs**                | Regelmäßige Aufgaben (z. B. tägliche Backups, Cleanup-Skripte).               |
+| **Container Management**     | Docker-Images bauen, testen und in Registries pushen.                         |
+| **Monorepo Management**      | Selektives Ausführen von Tests/Builds abhängig vom betroffenen Verzeichnis.   |
+| **Multi-Repo Workflows**     | Controller-Repositories, Trigger über `repository_dispatch`.                  |
+
+---
+
+#### ✅ Vorteile von GitHub Actions
+
+* Keine externe CI/CD-Plattform notwendig
+* Nahtlose GitHub-Integration
+* Pay-as-you-go auf GitHub-hosted Runners
+* Sehr flexibel dank Shell, Docker, eigene Actions
+* Open-Source Marketplace mit riesiger Auswahl
+
+---
+
+
+
 ### General overview
 
 
@@ -874,9 +945,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -916,7 +987,7 @@ jobs:
 
   * https://docs.github.com/en/actions/writing-workflows/choosing-where-your-workflow-runs/running-jobs-in-a-container
 
-## github actions - Praxis II (Arbeiten mit Outputs)
+## github actions - Praxis II (Arbeiten mit Outputs / GITHUB_STEP_SUMMARY)
 
 ### Outputs zwischen jobs
 
@@ -973,6 +1044,322 @@ jobs:
           git tag "$TAG_NAME"
           git push origin "$TAG_NAME"
 ```
+
+### Zusammenfassung ausgeben
+
+
+  * Writing to $GITHUB_STEP_SUMMARY writes to a summary, that is visible on the summary of the actions - run 
+
+```
+name: Jochen's nicer workflow 
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+ 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run a one-line script
+        run: | 
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
+          pwd 
+          ls -la
+          #/bin/false
+          echo "### Hello world in build after false ! :rocket:" >> $GITHUB_STEP_SUMMARY
+    
+  deploy:
+    
+    # needs a succesful build 
+    # THAT IS IMPORTANT 
+    needs: build 
+    runs-on: ubuntu-latest 
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Starting the deploy 
+        run: | 
+          echo "starting the deployment process" 
+          ls -la
+          echo "### Hello world in deploy after false ! :rocket:" >> $GITHUB_STEP_SUMMARY
+```
+
+## github actions - Praxis III (Tests)
+
+### Tests über python script durchführen
+
+
+### Step 1: Simple Version 
+
+  * Import https://github.com/jmetzger/github-actions-python-test
+
+#### 1.1 Neues Repo als import 
+
+![image](https://github.com/user-attachments/assets/4eb573e6-81c2-4e4b-9a78-bbff2d3eadac)
+
+```
+The url for your source repository:
+https://github.com/jmetzger/github-actions-python-test
+
+Your new repository detail:
+Bei Repository name:
+z.B. --> jm-github-actions-python-test
+
+Begin import -> Button
+```
+
+
+
+### Info 2: This workflow is included 
+
+```
+name: Python Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tests
+        run: |
+          pytest
+```
+
+
+
+### Step 3: We want more info: 
+
+  * Does not work because of missing permissions 
+
+```
+name: Python Tests with Report
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tests and Generate Report
+        run: |
+          pytest --junitxml=pytest-results.xml
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: pytest-results.xml
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: pytest-results.xml
+```
+
+### Step 4: With correct permissions 
+ 
+
+  * Does not work because of missing permissions 
+
+```
+name: Python Tests with Report
+
+permissions:
+  checks: write
+  pull-requests: write
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tests and Generate Report
+        run: |
+          pytest --junitxml=pytest-results.xml
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: pytest-results.xml
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: pytest-results.xml
+```
+
+
+## github actions - needs (Abhängige Abläufe)
+
+### Arbeiten mit needs und if always()
+
+
+### Beispiel ohne needs 
+
+  * alle stages (jobs) laufen parallel 
+
+```
+name: Ohne needs
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🔨 Baue etwas"
+          sleep 30 
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "✅ Teste etwas"
+          sleep 30
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🚀 Deploy"
+          sleep 30 
+```
+
+
+### Beispiel mit needs 
+
+  * Erst wenn das need erfüllt ist, kann der nächste Job gestartet werden
+
+```
+name: Mit needs
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🔨 Baue etwas"
+          sleep 30 
+
+  test:
+    needs: build 
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "✅ Teste etwas"
+          sleep 30
+
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🚀 Deploy"
+          sleep 30 
+
+
+
+```
+
+### Beispiel weitermachen (auch bei Fehler) 
+
+```
+name: Mit needs
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          xecho "🔨 Baue etwas"
+          sleep 30 
+
+  test:
+    if: always()
+    needs: build 
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "✅ Teste etwas"
+          sleep 30
+
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "🚀 Deploy"
+          sleep 30 
+```
+
 
 ## github actions - Use Cases
 
@@ -1055,6 +1442,8 @@ jobs:
 
 ### Step 1: Neues Repo in gittrainereu / gittrainereu2 durch import  
 
+  
+  * mit beliebigen Namen: jm-sein-java 
   * https://github.com/yhayashi30/maven-jar-sample.git
 
 ### Step 2: Workflow erstellen 
@@ -1065,7 +1454,66 @@ name: Build and Deploy Aya GlassFish Jar
 on:
   push:
     branches:
-      - main
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build JAR with Maven
+        run: mvn clean package
+
+      - name: Copy JAR to Aya-GlassFish via SCP
+        run: |
+          ls -la
+          cd target
+          ls -la 
+
+```
+
+
+### Step 3: Für Zielsystem Schlüsselpaar erstellen 
+
+```
+## auf dem client
+ssh-keygen
+## Bitte bei Passwort nur bestätigen (mit Enter)
+## Es darf kein Passwort hinterlegt
+## Den .pub-key nach ~/.ssh/authorized_keys schreiben
+## z.B. id_ed25519.pub 
+
+```
+
+
+### Step 4: adding scp 
+
+
+```
+## SECRET -> SSH_PRIVATE_KEY mit private_key anlegen
+https://github.com/gittrainereu/jm-sein-java/settings/secrets/actions/new
+```
+
+![image](https://github.com/user-attachments/assets/a8c61b8a-d231-4b65-b20b-3a6752e3150e)
+
+
+
+```
+name: Build and Deploy Aya GlassFish Jar
+
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build-and-deploy:
@@ -1087,11 +1535,13 @@ jobs:
       - name: Copy JAR to Aya-GlassFish via SCP
         uses: appleboy/scp-action@v1
         with:
-          host: 161.35.74.206
+          host: 164.92.167.148
+## ändern 
           username: tln1
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "target/*.jar"
+## hier bitte eure eigene tln-nr statt tln1 eintragen 
           target: "/home/tln1/"
 
 ```
@@ -1147,7 +1597,7 @@ jobs:
 ### Manueller Start Pipeline mit Formular (Inputs)
 
 
-### Version 1: mit ifs 
+### Version 1: mit if-Abfragen
 
 ```
 ## .github/workflows/deployment.yml
@@ -2188,6 +2638,13 @@ jobs:
 ### Write secret to file and push to repo
 
 
+### Vorbereitung 
+
+  * SECRET_SUPER_SECRET setzten über GUI 
+
+
+### Workflow 
+
 ```
 name: secret and push 
 
@@ -2316,50 +2773,6 @@ werden, weil dist/en/index.html (englische Version) nicht geämndert wurde
 
 ### Run script from repo
 
-
-### Step 1: Create script in repo 
-
-```
-## scripts/deploy.sh
-```
-
-```
-##!/bin/bash 
-
-echo "test this" 
-env
-echo $GITHUB_OUTPUT 
-echo "VORNAME=Hans" >> $GITHUB_OUTPUT
-```
-
-### Step 2: .github/workflows/blank.yml
-
-```
-name: CI
-
-## Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
-  push:
-    branches: [ "master" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-  
-## A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  run-playbooks:
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v4
-      - name: run deploy 
-        shell: bash
-        run: |
-         cd scripts
-         chmod u+x ./deploy.sh
-         ./deploy.sh 
-```
-
 ### Deploy with ansbile using ssh
 
 
@@ -2441,7 +2854,7 @@ jobs:
 ### Write to summary page from within jobs
 
 
-  * Writing to $GITHUB_STEP_SUMMARY writes to a summry, that is visible on the summary of the actions - run 
+  * Writing to $GITHUB_STEP_SUMMARY writes to a summary, that is visible on the summary of the actions - run 
 
 ```
 name: Jochen's nicer workflow 
