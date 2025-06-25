@@ -59,7 +59,7 @@ jobs:
 
 ## Step 3: We want more info: 
 
-  * Attention: You have to set write permssions to repo 
+  * Does not work because of missing permissions 
 
 ```
 name: Python Tests with Report
@@ -104,3 +104,58 @@ jobs:
         with:
           files: pytest-results.xml
 ```
+
+## Step 4: With correct permissions 
+
+## Step 3: We want more info: 
+
+  * Does not work because of missing permissions 
+
+```
+name: Python Tests with Report
+
+permissions:
+  checks: write
+  pull-requests: write
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Tests and Generate Report
+        run: |
+          pytest --junitxml=pytest-results.xml
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-results
+          path: pytest-results.xml
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: pytest-results.xml
+```
+
