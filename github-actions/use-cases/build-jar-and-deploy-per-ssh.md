@@ -14,7 +14,7 @@ name: Build and Deploy Aya GlassFish Jar
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
