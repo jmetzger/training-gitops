@@ -58,6 +58,10 @@
   1. github actions - Praxis III (Tests)
      * [Tests über python script durchführen](github-actions/use-cases/run-python-test.md)
 
+  1. github actions - needs (Abhängige Abläufe)
+     * [Arbeiten mit needs und if always()](github-actions/examples/14-needs.md)
+   
+
   1. github actions - Use Cases
      * [helm-chart aus repo in Kubernetes Cluster installieren](/github-actions/use-cases/deploy-helm-chart-2-kubernetes.md)
      * [jar bauen und über scp an den Server übertragen](/github-actions/use-cases/build-jar-and-deploy-per-ssh.md)
