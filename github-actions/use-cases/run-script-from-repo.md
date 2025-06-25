@@ -42,3 +42,20 @@ jobs:
          chmod u+x ./deploy.sh
          ./deploy.sh 
 ```
+
+
+## Step 3: Script ändern (jetzt mit Rückgabefehler) 
+
+```
+# scripts/deploy.sh
+```
+
+```
+#!/bin/bash 
+
+echo "test this" 
+env
+echo $GITHUB_OUTPUT 
+echo "VORNAME=Hans" >> $GITHUB_OUTPUT
+exit 1
+```
