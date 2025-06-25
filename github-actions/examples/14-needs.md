@@ -38,7 +38,7 @@ jobs:
   * Erst wenn das need erfüllt ist, kann der nächste Job gestartet werden
 
 ```
-name: Ohne needs
+name: Mit needs
 
 on: [push]
 
