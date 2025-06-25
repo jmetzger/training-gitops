@@ -52,4 +52,4 @@ GitHub Actions ist eine sehr leistungsfähige CI/CD- und Automatisierungsplattfo
 
 ---
 
-Wenn du möchtest, kann ich dir auch **konkrete YAML-Beispiele**, eine **Best-Practice-Pipeline**, oder ein **fertiges CI/CD-Repo zum Klonen** zeigen. Möchtest du ein Beispiel für einen bestimmten Anwendungsfall?
+
