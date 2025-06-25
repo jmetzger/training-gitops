@@ -106,8 +106,7 @@ jobs:
 ```
 
 ## Step 4: With correct permissions 
-
-## Step 3: We want more info: 
+ 
 
   * Does not work because of missing permissions 
 
