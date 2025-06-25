@@ -54,6 +54,9 @@
   1. github actions - Praxis II (Arbeiten mit Outputs)
      * [Outputs zwischen jobs](github-actions/examples/06-tag-auto-erstellung-und-setzen.md)
 
+  1. github actions - Praxis III (Tests)
+     * [Tests über python script durchführen](examples/15-python-test.md)
+
   1. github actions - Use Cases
      * [helm-chart aus repo in Kubernetes Cluster installieren](/github-actions/use-cases/deploy-helm-chart-2-kubernetes.md)
      * [jar bauen und über scp an den Server übertragen](/github-actions/use-cases/build-jar-and-deploy-per-ssh.md)
