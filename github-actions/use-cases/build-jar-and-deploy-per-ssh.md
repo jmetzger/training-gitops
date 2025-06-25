@@ -100,6 +100,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           source: "target/*.jar"
+# hier bitte eure eigene tln-nr statt tln1 eintragen 
           target: "/home/tln1/"
 
 ```
