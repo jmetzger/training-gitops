@@ -12,7 +12,7 @@ SECRET_SUPER_SECRET
 mysecretkey 
 ```
 
-## Workflow 
+## Version 1: Workflow 
 
 ```
 name: secret 
