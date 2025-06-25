@@ -2,7 +2,15 @@
 
 ## Secret in der Gui festlegen 
 
- * SECRET_SUPER_SECRET
+ * SETTINGS -> Secrets and variables -> Actions - New Repository secret 
+
+```
+SECRET_SUPER_SECRET
+```
+
+```
+mysecretkey 
+```
 
 ## Workflow 
 
