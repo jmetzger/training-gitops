@@ -35,7 +35,8 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v4
-      - name: run_deploy 
+      - name: run deploy
+        id: run_deploy 
         shell: bash
         run: |
          cd scripts
@@ -97,7 +98,8 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v4
-      - name: run_deploy 
+      - name: run deploy
+        id: run_deploy
         shell: bash
         run: |
          cd scripts
