@@ -41,7 +41,31 @@ jobs:
 
 ```
 
-## Step 3: adding scp 
+
+## Step 3: Für Zielsystem Schlüsselpaar erstellen 
+
+```
+# auf dem client
+ssh-keygen
+# Bitte bei Passwort nur bestätigen (mit Enter)
+# Es darf kein Passwort hinterlegt
+# Den .pub-key nach ~/.ssh/authorized_keys schreiben
+# z.B. id_ed25519.pub 
+
+```
+
+
+## Step 4: adding scp 
+
+
+```
+# SECRET -> SSH_PRIVATE_KEY mit private_key anlegen
+https://github.com/gittrainereu/jm-sein-java/settings/secrets/actions/new
+```
+
+![image](https://github.com/user-attachments/assets/a8c61b8a-d231-4b65-b20b-3a6752e3150e)
+
+
 
 ```
 name: Build and Deploy Aya GlassFish Jar
