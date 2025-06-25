@@ -1,6 +1,6 @@
 # Write to summary - example 
 
-  * Writing to $GITHUB_STEP_SUMMARY writes to a summry, that is visible on the summary of the actions - run 
+  * Writing to $GITHUB_STEP_SUMMARY writes to a summary, that is visible on the summary of the actions - run 
 
 ```
 name: Jochen's nicer workflow 
