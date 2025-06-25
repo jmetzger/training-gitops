@@ -43,6 +43,7 @@
 
   1. github actions - Einführung
      * [Was ist ci/cd ?](/ci-cd/overview.md)
+     * [Was kann github ci/cd](/ci-cd/was-kann-github-actions.md)
      * [General overview](/github-actions/general.md)
 
   1. github actions - Praxis I
