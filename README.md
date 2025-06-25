@@ -77,6 +77,11 @@
      * [Feature github: nur bestimmte Reviewer zählen zu den approval-Zählungen](github-actions/approval-by-codeowners.md)
      * [mit github actions reviewer eintragen](github-actions/auto-eintrag-reviewer-ueber-github-actions.md)
 
+## Extras - yopad 
+
+ 1. [yopad - Aufzeichnungen](yopad/20250623.md)
+
+
 ## Extras - git 
 
   1. Git - Best practices 
