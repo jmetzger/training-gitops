@@ -2,7 +2,23 @@
 
 ## Step 1: Simple Version 
 
-  * Import or fork  https://github.com/jmetzger/github-actions-python-test
+  * Import https://github.com/jmetzger/github-actions-python-test
+
+### 1.1 Neues Repo als import 
+
+![image](https://github.com/user-attachments/assets/4eb573e6-81c2-4e4b-9a78-bbff2d3eadac)
+
+```
+The url for your source repository:
+https://github.com/jmetzger/github-actions-python-test
+
+Your new repository detail:
+Bei Repository name:
+z.B. --> jm-github-actions-python-test
+
+Begin import -> Button
+```
+
 
 
 ## Info 2: This workflow is included 
