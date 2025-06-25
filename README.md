@@ -51,8 +51,9 @@
      * [Übung 2: Das repo auschecken](/github-actions/examples/02-checkout-repo.md)
      * [Übung 3: Workflow in Container ausführen](/github-actions/examples/08-run-job-in-container.md)
 
-  1. github actions - Praxis II (Arbeiten mit Outputs)
+  1. github actions - Praxis II (Arbeiten mit Outputs / GITHUB_STEP_SUMMARY)
      * [Outputs zwischen jobs](github-actions/examples/06-tag-auto-erstellung-und-setzen.md)
+     * [Zusammenfassung ausgeben](github-actions/write_to_summary.md)
 
   1. github actions - Praxis III (Tests)
      * [Tests über python script durchführen](github-actions/use-cases/run-python-test.md)
