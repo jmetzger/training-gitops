@@ -40,7 +40,10 @@ jobs:
 ```
 
 
+
 ## Step 3: We want more info: 
+
+  * Attention: You have to set write permssions to repo 
 
 ```
 name: Python Tests with Report
